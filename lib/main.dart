@@ -1,8 +1,9 @@
-import 'package:chat_firebase/common/routes/routes.dart';
-import 'package:chat_firebase/common/services/storage.dart';
-import 'package:chat_firebase/common/store/config.dart';
-import 'package:chat_firebase/common/store/user.dart';
-import 'package:chat_firebase/common/style/style.dart';
+import 'package:chat_firebase/app/services/storage_service.dart';
+import 'package:chat_firebase/routes/routes.dart';
+
+import 'package:chat_firebase/app/services/service_handler/config.dart';
+import 'package:chat_firebase/app/services/service_handler/user.dart';
+import 'package:chat_firebase/app/config/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
