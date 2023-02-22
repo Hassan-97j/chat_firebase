@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../presentation/application/bindings.dart';
+import '../presentation/application/view.dart';
+import '../presentation/chat/bindings.dart';
+import '../presentation/chat/view.dart';
 import '../presentation/contacts/bindings.dart';
 import '../presentation/contacts/view.dart';
+import '../presentation/imageview/bindings.dart';
+import '../presentation/imageview/view.dart';
+import '../presentation/profile/bindings.dart';
+import '../presentation/profile/view.dart';
 import '../presentation/sign_in/bindings.dart';
 import '../presentation/sign_in/view.dart';
+import '../presentation/welcome/bindings.dart';
+import '../presentation/welcome/view.dart';
 import 'routes.dart';
-import '../presentation/application/index.dart';
-import '../presentation/imageview/index.dart';
-import '../presentation/profile/index.dart';
-
-import '../presentation/welcome/index.dart';
 import '../app/middlewares/router_welcome.dart';
-import '../presentation/chat/index.dart';
 
 class AppPages {
   static const initial = AppRoutes.initial;

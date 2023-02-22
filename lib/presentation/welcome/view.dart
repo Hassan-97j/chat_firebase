@@ -1,7 +1,6 @@
+import 'package:chat_firebase/presentation/welcome/controller.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -94,7 +93,7 @@ class WelcomePage extends GetView<WelcomeController> {
               ),
               Positioned(
                 child: DotsIndicator(
-                  position: controller.state.index.value.toDouble(),
+                  position: controller.index.value.toDouble(),
                   dotsCount: 3,
                   reversed: false,
                   mainAxisAlignment: MainAxisAlignment.center,

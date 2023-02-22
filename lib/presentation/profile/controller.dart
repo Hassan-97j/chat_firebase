@@ -5,12 +5,13 @@ import 'package:chat_firebase/routes/routes.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../app/services/service_handler/user.dart';
-import 'index.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
-  final state = ProfileState();
-  ProfileController();
+  // final state = ProfileState();
+  // ProfileController();
+  var headerDetails = Rx<UserLoginResponseEntityModel?>(null);
+  var meListItem = <MeListItemModel>[].obs;
 
   @override
   void onInit() {
@@ -58,7 +59,7 @@ class ProfileController extends GetxController {
       result.icon = myList[i]["icon"];
       result.name = myList[i]["name"];
       result.route = myList[i]["route"];
-      state.meListItem.add(result);
+      meListItem.add(result);
     }
   }
 
@@ -74,7 +75,7 @@ class ProfileController extends GetxController {
     if (profile.isNotEmpty) {
       UserLoginResponseEntityModel userData =
           UserLoginResponseEntityModel.fromJson(jsonDecode(profile));
-      state.headerDetails.value = userData;
+      headerDetails.value = userData;
     }
   }
 

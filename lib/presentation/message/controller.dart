@@ -1,17 +1,29 @@
 import 'package:chat_firebase/app/services/service_handler/user.dart';
-import 'package:chat_firebase/app/utils/http.dart';
+import 'package:chat_firebase/data/repositories/firebase_repo/message_repo.dart';
+import 'package:chat_firebase/data/repositories/http_repo/maps_repo.dart';
+import 'package:chat_firebase/data/repositories/location_repo.dart';
 import 'package:chat_firebase/domain/interface/msg_model.dart';
-import 'package:chat_firebase/domain/interface/my_location_model.dart';
+import 'package:chat_firebase/domain/repositories/firebase_repo/fcm_repo_impl.dart';
+import 'package:chat_firebase/domain/repositories/firebase_repo/message_repo_impl.dart';
+import 'package:chat_firebase/domain/repositories/location_repo_impl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:location/location.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'index.dart';
 import 'package:get/get.dart';
 
+import '../../app/utils/http.dart';
+import '../../data/repositories/firebase_repo/fcm_repo.dart';
+import '../../domain/interface/my_location_model.dart';
+import '../../domain/repositories/http_repo/maps_repo_impl.dart';
+
 class MessageController extends GetxController {
-  final state = MessageState();
-  MessageController();
+  MessageRepo messageRepo = MessageRepoImpl();
+  FCMRepo fcmRepo = FCMRepoImpl();
+  MapsRepo mapsRepo = MapsRepoImpl();
+  LocationRepo locationRepo = LocationRepoImpl();
+  var msgList = <QueryDocumentSnapshot<MsgModel>>[].obs;
+  // final state = MessageState();
+  // MessageController();
   final token = UserStore.to.token;
   final db = FirebaseFirestore.instance;
   // ignore: prefer_typing_uninitialized_variables
@@ -45,55 +57,30 @@ class MessageController extends GetxController {
   }
 
   loadAllData() async {
-    var fromMessages = await db
-        .collection('message')
-        .withConverter(
-            fromFirestore: MsgModel.fromFirestore,
-            toFirestore: (MsgModel msg, options) {
-              return msg.toFirestore();
-            })
-        .where("from_uid", isEqualTo: token)
-        .get();
-    var toMessages = await db
-        .collection('message')
-        .withConverter(
-            fromFirestore: MsgModel.fromFirestore,
-            toFirestore: (MsgModel msg, options) {
-              return msg.toFirestore();
-            })
-        .where("to_uid", isEqualTo: token)
-        .get();
-    state.msgList.clear();
+    var fromMessages = await messageRepo.getFromMessages();
+
+    var toMessages = await messageRepo.getToMessages();
+
+    msgList.clear();
+
     if (fromMessages.docs.isNotEmpty) {
-      state.msgList.assignAll(fromMessages.docs);
+      msgList.assignAll(fromMessages.docs);
     }
     if (toMessages.docs.isNotEmpty) {
-      state.msgList.assignAll(toMessages.docs);
+      msgList.assignAll(toMessages.docs);
     }
+    update();
   }
 
   getUserLocation() async {
     try {
-      final location = await Location().getLocation();
-      String address = "${location.latitude}, ${location.longitude}";
-      String url =
-          "https://maps.googleapis.com/maps/api/geocode/json?address=$address&key=AIzaSyCMOW63IEO4ekawnyxGd8G2MRHztfkljF0";
-      var response = await HttpUtil().get(url);
-      MyLocationModel locationResponse = MyLocationModel.fromJson(response);
-      if (locationResponse.status == "OK") {
-        String? myAddress = locationResponse.results?.first.formattedAddress;
-        if (myAddress != null) {
-          var userLocation =
-              await db.collection("users").where("id", isEqualTo: token).get();
-          if (userLocation.docs.isNotEmpty) {
-            var docId = userLocation.docs.first.id;
-            await db.collection("users").doc(docId).update(
-              {
-                "location": myAddress,
-              },
-            );
-          }
-        }
+      String address = await locationRepo.getLocationAddress();
+
+      var response = await mapsRepo.getLocation(address);
+
+      String? myAddress = response.results!.first.formattedAddress;
+      if (myAddress != null) {
+        await messageRepo.updateLocationToDB(myAddress);
       }
     } catch (e) {
       // ignore: avoid_print
@@ -102,19 +89,6 @@ class MessageController extends GetxController {
   }
 
   getFCMToken() async {
-    final fcmToken = FirebaseMessaging.instance.getToken();
-    // ignore: unnecessary_null_comparison
-    if (fcmToken != null) {
-      var user =
-          await db.collection("users").where("id", isEqualTo: token).get();
-      if (user.docs.isNotEmpty) {
-        var docId = user.docs.first.id;
-        await db.collection("users").doc(docId).update(
-          {
-            "fcmtoken": fcmToken,
-          },
-        );
-      }
-    }
+    await fcmRepo.getFCMToken();
   }
 }

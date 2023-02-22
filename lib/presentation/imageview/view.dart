@@ -31,7 +31,7 @@ class ImageViewPage extends GetView<ImageViewController> {
         ),
       ),
       body: PhotoView(
-        imageProvider: NetworkImage(controller.state.url.value),
+        imageProvider: NetworkImage(controller.url.value),
       ),
     );
   }

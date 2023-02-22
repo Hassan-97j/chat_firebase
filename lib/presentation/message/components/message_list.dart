@@ -1,6 +1,5 @@
 import 'package:chat_firebase/presentation/message/components/msg_list_item.dart';
-
-import '../index.dart';
+import 'package:chat_firebase/presentation/message/controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +28,7 @@ class MessageList extends GetView<MessageController> {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    var item = controller.state.msgList[index];
+                    var item = controller.msgList[index];
                     return MsgListItem(
                       imgUrl: item.data().from_uid == controller.token
                           ? item.data().to_avatar!
@@ -65,7 +64,7 @@ class MessageList extends GetView<MessageController> {
                       },
                     );
                   },
-                  childCount: controller.state.msgList.length,
+                  childCount: controller.msgList.length,
                 ),
               ),
             ),

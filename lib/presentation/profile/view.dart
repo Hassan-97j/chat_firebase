@@ -1,10 +1,10 @@
 import 'package:chat_firebase/presentation/profile/components/me_item.dart';
+import 'package:chat_firebase/presentation/profile/controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../app/config/values/colors.dart';
 import '../../app/utils/widgets/app.dart';
 import 'components/head_item.dart';
-import 'index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,15 +30,15 @@ class ProfilePage extends GetView<ProfileController> {
             SliverPadding(
               padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
               sliver: SliverToBoxAdapter(
-                child: controller.state.headerDetails.value == null
+                child: controller.headerDetails.value == null
                     ? Container()
                     : HeadItem(
-                        url: controller.state.headerDetails.value?.photoUrl ??
+                        url: controller.headerDetails.value?.photoUrl ??
                             "",
                         name:
-                            controller.state.headerDetails.value?.displayName ??
+                            controller.headerDetails.value?.displayName ??
                                 "",
-                        id: controller.state.headerDetails.value?.accessToken ??
+                        id: controller.headerDetails.value?.accessToken ??
                             "",
                       ),
               ),
@@ -48,7 +48,7 @@ class ProfilePage extends GetView<ProfileController> {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    var item = controller.state.meListItem[index];
+                    var item = controller.meListItem[index];
                     return MeItem(
                       assetName: item.icon ?? "",
                       name: item.name ?? "",
@@ -59,7 +59,7 @@ class ProfilePage extends GetView<ProfileController> {
                       },
                     );
                   },
-                  childCount: controller.state.meListItem.length,
+                  childCount: controller.meListItem.length,
                 ),
               ),
             ),

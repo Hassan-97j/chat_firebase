@@ -1,12 +1,13 @@
 import 'package:chat_firebase/app/utils/dialogs.dart';
-import 'package:chat_firebase/data/repositories/auth_repository.dart';
 
-import 'package:chat_firebase/domain/repositories/auth_repo_impl.dart';
+import 'package:chat_firebase/domain/repositories/firebase_repo/auth_repo_impl.dart';
 import 'package:chat_firebase/routes/routes.dart';
 
 // import 'package:google_sign_in/google_sign_in.dart';
 // import 'index.dart';
 import 'package:get/get.dart';
+
+import '../../data/repositories/firebase_repo/auth_repository.dart';
 
 // GoogleSignIn googleSignIn = GoogleSignIn(
 //   scopes: <String>[

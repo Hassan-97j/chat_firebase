@@ -26,7 +26,7 @@ class ChatList extends GetView<ChatController> {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    var item = controller.state.msgContentList[index];
+                    var item = controller.msgContentList[index];
                     if (controller.userId == item.uid) {
                       return ChatRightItem(
                         data: item.content ?? "",
@@ -54,7 +54,7 @@ class ChatList extends GetView<ChatController> {
                       },
                     );
                   },
-                  childCount: controller.state.msgContentList.length,
+                  childCount: controller.msgContentList.length,
                 ),
               ),
             ),

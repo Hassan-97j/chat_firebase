@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../app/services/service_handler/user.dart';
-import '../../data/repositories/auth_repository.dart';
-import '../interface/user_model.dart';
+import '../../../app/services/service_handler/user.dart';
+import '../../../data/repositories/firebase_repo/auth_repository.dart';
+import '../../interface/user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   GoogleSignIn googleSignIn = GoogleSignIn(

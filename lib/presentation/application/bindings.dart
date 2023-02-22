@@ -1,7 +1,8 @@
+import 'package:chat_firebase/presentation/application/controller.dart';
+import 'package:chat_firebase/presentation/message/controller.dart';
+
 import '../contacts/controller.dart';
-import '../message/index.dart';
 import '../profile/controller.dart';
-import 'index.dart';
 import 'package:get/get.dart';
 
 class ApplicationBinding implements Bindings {

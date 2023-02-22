@@ -1,4 +1,4 @@
-import 'index.dart';
+import 'package:chat_firebase/presentation/profile/controller.dart';
 import 'package:get/get.dart';
 
 class ProfileBinding implements Bindings {

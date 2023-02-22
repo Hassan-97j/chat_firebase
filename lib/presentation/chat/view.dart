@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_firebase/app/config/values/values.dart';
+import 'package:chat_firebase/presentation/chat/controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'components/chat_list.dart';
-import 'index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +28,10 @@ class ChatPage extends GetView<ChatController> {
               ListTile(
                 leading: const Icon(Icons.photo_camera),
                 title: const Text('Camera'),
-                onTap: () {},
+                onTap: () async {
+                  await controller.imageFromCamera();
+                  Get.back();
+                },
               ),
             ],
           ),
@@ -71,7 +74,7 @@ class ChatPage extends GetView<ChatController> {
                     width: 44.w,
                     height: 44.w,
                     child: CachedNetworkImage(
-                      imageUrl: controller.state.toAvatar.value,
+                      imageUrl: controller.toAvatar.value,
                       imageBuilder: (context, imageProvider) => Container(
                         margin: null,
                         height: 44.w,
@@ -107,7 +110,7 @@ class ChatPage extends GetView<ChatController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              controller.state.toName.value,
+                              controller.toName.value,
                               overflow: TextOverflow.clip,
                               maxLines: 1,
                               style: TextStyle(
@@ -117,7 +120,7 @@ class ChatPage extends GetView<ChatController> {
                               ),
                             ),
                             Text(
-                              controller.state.toLocation.value,
+                              controller.toLocation.value,
                               overflow: TextOverflow.clip,
                               maxLines: 1,
                               style: TextStyle(

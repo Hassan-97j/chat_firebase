@@ -1,12 +1,11 @@
 import 'package:chat_firebase/app/config/values/values.dart';
 import 'package:flutter/material.dart';
-
-import 'index.dart';
 import 'package:get/get.dart';
 
 class ApplicationController extends GetxController {
-  ApplicationController();
-  final state = ApplicationState();
+  // ApplicationController();
+  // final state = ApplicationState();
+  var page = 0.obs;
 
   late final List<String> tabTitles;
   late final PageController pageController;
@@ -14,7 +13,7 @@ class ApplicationController extends GetxController {
 
   //handle navigation controller
   onPageChage(int index) {
-    state.page.value = index;
+    page.value = index;
   }
 
   //on item tap navigate to page
@@ -72,7 +71,7 @@ class ApplicationController extends GetxController {
       ),
     ];
     pageController = PageController(
-      initialPage: state.page.value,
+      initialPage: page.value,
     );
   }
 

@@ -1,9 +1,9 @@
 import 'package:chat_firebase/app/config/values/values.dart';
+import 'package:chat_firebase/presentation/application/controller.dart';
 
 import '../contacts/view.dart';
 import '../message/view.dart';
 import '../profile/view.dart';
-import 'index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +16,7 @@ class ApplicationPage extends GetView<ApplicationController> {
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
           items: controller.bottomTabs,
-          currentIndex: controller.state.page.value,
+          currentIndex: controller.page.value,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {
             controller.onNavigationBarItemTap(index);
