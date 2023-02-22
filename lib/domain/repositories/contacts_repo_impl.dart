@@ -57,8 +57,7 @@ class ContactRepoImpl implements ContactsRepository {
   }
 
   @override
-  Future<DocumentReference<MsgModel>> saveMessage(
-      UserDataModel toUserData) async {
+  Future<String> saveMessage(UserDataModel toUserData) async {
     String profile = await UserStore.to.getProfile();
     UserLoginResponseEntityModel userData =
         UserLoginResponseEntityModel.fromJson(jsonDecode(profile));
@@ -73,7 +72,7 @@ class ContactRepoImpl implements ContactsRepository {
       last_time: Timestamp.now(),
       msg_num: 0,
     );
-    var messages = db
+    var messages = await db
         .collection("message")
         .withConverter(
             fromFirestore: MsgModel.fromFirestore,
@@ -81,6 +80,6 @@ class ContactRepoImpl implements ContactsRepository {
               return msg.toFirestore();
             })
         .add(msgData);
-    return messages;
+    return messages.id;
   }
 }

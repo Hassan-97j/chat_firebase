@@ -11,18 +11,23 @@ class ContactsPage extends GetView<ContactsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: transparentAppBar(
-        title: Text(
-          'Contacts',
-          style: TextStyle(
-            color: AppColors.primaryBackground,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w700,
+    return GetBuilder<ContactsController>(
+      init: ContactsController(),
+      builder: (_) {
+        return Scaffold(
+          appBar: transparentAppBar(
+            title: Text(
+              'Contacts',
+              style: TextStyle(
+                color: AppColors.primaryBackground,
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
-        ),
-      ),
-      body: const ContactList(),
+          body: const ContactList(),
+        );
+      },
     );
   }
 }

@@ -75,30 +75,31 @@ class ContactsController extends GetxController {
       //     .add(msgData)
       contactRepo.saveMessage(toUserData).then((value) {
         Get.toNamed("/chat", arguments: {
-          "doc_id": value.id,
+          "doc_id": value,
           "to_uid": toUserData.id ?? "",
           "to_name": toUserData.name ?? "",
           "to_avatar": toUserData.photourl ?? "",
         });
       });
-    } else {
-      if (fromMessages.isNotEmpty) {
-        Get.toNamed("/chat", arguments: {
-          "doc_id": fromMessages.first.id,
-          "to_uid": toUserData.id ?? "",
-          "to_name": toUserData.name ?? "",
-          "to_avatar": toUserData.photourl ?? "",
-        });
-      }
-      if (toMessages.isNotEmpty) {
-        Get.toNamed("/chat", arguments: {
-          "doc_id": toMessages.first.id,
-          "to_uid": toUserData.id ?? "",
-          "to_name": toUserData.name ?? "",
-          "to_avatar": toUserData.photourl ?? "",
-        });
-      }
-    }
+    } 
+    // else {
+    //   if (fromMessages.isNotEmpty) {
+    //     Get.toNamed("/chat", arguments: {
+    //       "doc_id": fromMessages.first.id,
+    //       "to_uid": toUserData.id ?? "",
+    //       "to_name": toUserData.name ?? "",
+    //       "to_avatar": toUserData.photourl ?? "",
+    //     });
+    //   }
+    //   if (toMessages.isNotEmpty) {
+    //     Get.toNamed("/chat", arguments: {
+    //       "doc_id": toMessages.first.id,
+    //       "to_uid": toUserData.id ?? "",
+    //       "to_name": toUserData.name ?? "",
+    //       "to_avatar": toUserData.photourl ?? "",
+    //     });
+    //   }
+    // }
 //////////////////////////////////////////
   }
 
