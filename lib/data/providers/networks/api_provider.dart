@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -5,7 +7,6 @@ import 'package:http/http.dart' as http;
 
 import '../../../domain/interface/gen_res_model.dart';
 import 'api_req_represent.dart';
-
 
 class APIProvider {
   static const requestTimeOut = Duration(seconds: 25);

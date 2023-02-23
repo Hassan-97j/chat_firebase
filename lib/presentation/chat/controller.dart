@@ -37,30 +37,14 @@ class ChatController extends GetxController {
 
   Future imageFromGallery() async {
     photo = await imagePickerRepo.imageFromGallery();
-    // final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
-    // if (pickedFile != null) {
-    //   photo = File(pickedFile.path);
-    // } else {
-    //   // ignore: avoid_print
-    //   print('no image selected');
-    // }
   }
 
   Future imageFromCamera() async {
     photo = await imagePickerRepo.imageFromCamera();
-    // final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
-    // if (pickedFile != null) {
-    //   photo = File(pickedFile.path);
-    // } else {
-    //   // ignore: avoid_print
-    //   print('no image selected');
-    // }
   }
 
   Future getImgUrl(String name) async {
     var str = await chatRepository.getImgUrl(name);
-    // final spaceRef = FirebaseStorage.instance.ref("Chat").child(name);
-    // var str = await spaceRef.getDownloadURL();
     return str;
   }
 
@@ -68,9 +52,9 @@ class ChatController extends GetxController {
     if (photo == null) return;
     final fileName = getRandomString(15) + photo!.path;
     try {
-      // final ref = FirebaseStorage.instance.ref("chat").child(fileName);
-      // ref.putFile(photo!).snapshotEvents
-      chatRepository.uploadFile(fileName).listen((event) async {
+      //   final ref = FirebaseStorage.instance.ref("chat").child(fileName);
+      //  var abx = ref.putFile(photo!).snapshotEvents;
+      chatRepository.uploadFile(fileName).asStream().listen((event) async {
         switch (event.state) {
           case TaskState.running:
             break;
@@ -129,59 +113,12 @@ class ChatController extends GetxController {
   void onReady() {
     super.onReady();
     orderMessagesByLAstAdd();
-    // var messages = db
-    //     .collection("message")
-    //     .doc(docId)
-    //     .collection("msglist")
-    //     .withConverter(
-    //       fromFirestore: MsgcontentModel.fromFirestore,
-    //       toFirestore: (MsgcontentModel msgcontent, options) {
-    //         return msgcontent.toFirestore();
-    //       },
-    //     )
-    //     .orderBy("addtime", descending: false);
-    // msgContentList.clear();
-    // listener = messages.snapshots()
-    // .listen((event) {
-    //   for (var change in event.docChanges) {
-    //     switch (change.type) {
-    //       case DocumentChangeType.added:
-    //         if (change.doc.data() != null) {
-    //           msgContentList.insert(0, change.doc.data()!);
-    //         }
-    //         break;
-    //       case DocumentChangeType.modified:
-    //         break;
-    //       case DocumentChangeType.removed:
-    //         break;
-    //     }
-    //   }
-    //   // ignore: avoid_print
-    // }, onError: (error) => print('Listen Failed: $error'));
+
     getLocation();
   }
 
   getLocation() async {
     await chatRepository.getLocationFromDB(toId.value, toLocation.value);
-    // try {
-    //   var userLocation = await db
-    //       .collection("users")
-    //       .where("id", isEqualTo: toId.value)
-    //       .withConverter(
-    //         fromFirestore: UserDataModel.fromFirestore,
-    //         toFirestore: (UserDataModel userData, options) {
-    //           return userData.toFirestore();
-    //         },
-    //       )
-    //       .get();
-    //   var location = userLocation.docs.first.data().location;
-    //   if (location != '') {
-    //     toLocation.value = location ?? "Unknown";
-    //   }
-    // } catch (e) {
-    //   // ignore: avoid_print
-    //   print('error: $e');
-    // }
   }
 
   orderMessagesByLAstAdd() async {

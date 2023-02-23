@@ -25,7 +25,7 @@ class ApplicationController extends GetxController {
   void onInit() {
     super.onInit();
     tabTitles = [
-      'Chat',
+      'Messages',
       'Contact',
       'Profile',
     ];

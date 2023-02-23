@@ -7,13 +7,9 @@ import 'package:chat_firebase/domain/repositories/firebase_repo/fcm_repo_impl.da
 import 'package:chat_firebase/domain/repositories/firebase_repo/message_repo_impl.dart';
 import 'package:chat_firebase/domain/repositories/location_repo_impl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:location/location.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:get/get.dart';
-
-import '../../app/utils/http.dart';
 import '../../data/repositories/firebase_repo/fcm_repo.dart';
-import '../../domain/interface/my_location_model.dart';
 import '../../domain/repositories/http_repo/maps_repo_impl.dart';
 
 class MessageController extends GetxController {
@@ -22,13 +18,7 @@ class MessageController extends GetxController {
   MapsRepo mapsRepo = MapsRepoImpl();
   LocationRepo locationRepo = LocationRepoImpl();
   var msgList = <QueryDocumentSnapshot<MsgModel>>[].obs;
-  // final state = MessageState();
-  // MessageController();
   final token = UserStore.to.token;
-  final db = FirebaseFirestore.instance;
-  // ignore: prefer_typing_uninitialized_variables
-  var listener;
-
   final RefreshController refreshController = RefreshController(
     initialRefresh: true,
   );
@@ -58,11 +48,8 @@ class MessageController extends GetxController {
 
   loadAllData() async {
     var fromMessages = await messageRepo.getFromMessages();
-
     var toMessages = await messageRepo.getToMessages();
-
     msgList.clear();
-
     if (fromMessages.docs.isNotEmpty) {
       msgList.assignAll(fromMessages.docs);
     }

@@ -17,39 +17,47 @@ class ChatrepositoryImpl implements ChatRepository {
   final userId = UserStore.to.token;
 
   @override
-  Future getImgUrl(String name) async {
-    final spaceRef = storage.ref("Chat").child(name);
-    var str = await spaceRef.getDownloadURL();
-    return str;
+  Future<String> getImgUrl(String name) async {
+    try {
+      final spaceRef = storage.ref("Chat").child(name);
+      var str = await spaceRef.getDownloadURL();
+      return str;
+    } catch (e) {
+      // ignore: avoid_print
+      print('there is an error with getting image url: $e');
+      rethrow;
+    }
   }
 
   @override
-  uploadFile(String fileName) async {
+  Future uploadFile(String fileName) async {
     // if (photo == null) return;
     // final fileName = getRandomString(15) + photo!.path;
-    // try {
-    final ref = FirebaseStorage.instance.ref("chat").child(fileName);
-    ref.putFile(photo!).snapshotEvents;
-    // .listen((event) async {
-    //   switch (event.state) {
-    //     case TaskState.running:
-    //       break;
-    //     case TaskState.paused:
-    //       break;
-    //     case TaskState.success:
-    //       String imgUrl = await getImgUrl(fileName);
-    //       await sendMessage(imgUrl);
-    //       break;
-    //     case TaskState.canceled:
-    //       break;
-    //     case TaskState.error:
-    //       break;
-    //   }
-    // });
-    // } catch (e) {
-    //   // ignore: avoid_print
-    //   print('there is an error $e');
-    // }
+    try {
+      final ref =  FirebaseStorage.instance.ref("chat").child(fileName);
+      var eventSnapShot = ref.putFile(photo!).snapshotEvents;
+      return eventSnapShot;
+      // .listen((event) async {
+      //   switch (event.state) {
+      //     case TaskState.running:
+      //       break;
+      //     case TaskState.paused:
+      //       break;
+      //     case TaskState.success:
+      //       String imgUrl = await getImgUrl(fileName);
+      //       await sendMessage(imgUrl);
+      //       break;
+      //     case TaskState.canceled:
+      //       break;
+      //     case TaskState.error:
+      //       break;
+      //   }
+      // });
+    } catch (e) {
+      // ignore: avoid_print
+      print('there is an error with file upload: $e');
+      rethrow;
+    }
   }
 
   @override
@@ -131,6 +139,7 @@ class ChatrepositoryImpl implements ChatRepository {
           .orderBy("addtime", descending: false);
       return mesaaseg;
     } catch (e) {
+      // ignore: avoid_print
       print('erroe with orderMsgByLastTime() method: $e');
       rethrow;
     }
