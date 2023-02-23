@@ -10,28 +10,31 @@ class ImageViewPage extends GetView<ImageViewController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
-          child: Container(
-            height: 2.0,
-            decoration: const BoxDecoration(
-              color: AppColors.secondaryElement,
+    return GetBuilder<ImageViewController>(
+      init: ImageViewController(),
+      builder: (_) => Scaffold(
+        appBar: AppBar(
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(1.0),
+            child: Container(
+              height: 2.0,
+              decoration: const BoxDecoration(
+                color: AppColors.secondaryElement,
+              ),
+            ),
+          ),
+          title: Text(
+            'PhotoView',
+            style: TextStyle(
+              color: AppColors.primaryText,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.normal,
             ),
           ),
         ),
-        title: Text(
-          'PhotoView',
-          style: TextStyle(
-            color: AppColors.primaryText,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.normal,
-          ),
+        body: PhotoView(
+          imageProvider: NetworkImage(controller.url),
         ),
-      ),
-      body: PhotoView(
-        imageProvider: NetworkImage(controller.url.value),
       ),
     );
   }

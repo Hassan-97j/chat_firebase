@@ -7,7 +7,6 @@ import 'package:chat_firebase/domain/repositories/image_picker_repo_impl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../app/utils/security.dart';
 import 'package:get/get.dart';
 
@@ -16,24 +15,20 @@ import '../../data/repositories/firebase_repo/chat_repository.dart';
 class ChatController extends GetxController {
   final ChatRepository chatRepository = ChatrepositoryImpl();
   final ImagePickerRepo imagePickerRepo = ImagePickerRepoImpl();
-  // final state = ChatState();
-  // ChatController();
-  var msgContentList = <MsgcontentModel>[].obs;
-  var toId = "".obs;
-  var toName = "".obs;
-  var toAvatar = "".obs;
-  var toLocation = "unknown".obs;
+  var msgContentList = <MsgcontentModel>[];
+  var toId = "";
+  var toName = "";
+  var toAvatar = "";
+  var toLocation = "unknown";
   // ignore: prefer_typing_uninitialized_variables
   var docId;
   final textController = TextEditingController();
   ScrollController msgScrollController = ScrollController();
   FocusNode contentNode = FocusNode();
   final userId = UserStore.to.token;
-  final db = FirebaseFirestore.instance;
   // ignore: prefer_typing_uninitialized_variables
   var listener;
   File? photo;
-  final ImagePicker imagePicker = ImagePicker();
 
   Future imageFromGallery() async {
     photo = await imagePickerRepo.imageFromGallery();
@@ -89,11 +84,16 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getData();
+  }
+
+  getData() {
     var data = Get.arguments;
     docId = data['doc_id'];
-    toId.value = data['to_uid'] ?? '';
-    toName.value = data['to_name'] ?? '';
-    toAvatar.value = data['to_avatar'] ?? '';
+    toId = data['to_uid'] ?? '';
+    toName = data['to_name'] ?? '';
+    toAvatar = data['to_avatar'] ?? '';
+    update();
   }
 
   sendMessage() async {
@@ -107,6 +107,7 @@ class ChatController extends GetxController {
       Get.focusScope?.unfocus();
     });
     await chatRepository.updateMessage(sendContent);
+    update();
   }
 
   @override
@@ -118,7 +119,8 @@ class ChatController extends GetxController {
   }
 
   getLocation() async {
-    await chatRepository.getLocationFromDB(toId.value, toLocation.value);
+    await chatRepository.getLocationFromDB(toId, toLocation);
+    update();
   }
 
   orderMessagesByLAstAdd() async {
@@ -141,6 +143,7 @@ class ChatController extends GetxController {
       }
       // ignore: avoid_print
     }, onError: (error) => print('Listen Failed: $error'));
+    update();
   }
 
   @override

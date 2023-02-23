@@ -14,7 +14,7 @@ class ContactRepoImpl implements ContactsRepository {
   get token => UserStore.to.token;
 
   @override
-  Future<List<UserDataModel>> loadAllContacts() async {
+  Future<QuerySnapshot<UserDataModel>> loadAllContacts() async {
     try {
       final userBase = await db
           .collection("users")
@@ -24,8 +24,9 @@ class ContactRepoImpl implements ContactsRepository {
             toFirestore: (userData, options) => userData.toFirestore(),
           )
           .get();
-
-      return userBase.docs.map((doc) => doc.data()).toList();
+     // var list = userBase.docs.map((doc) => doc.data()).toList();
+      //  return list;
+      return userBase;
     } catch (e) {
       // ignore: avoid_print
       print("loadAllContact() metthod failed: $e");

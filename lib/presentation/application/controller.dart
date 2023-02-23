@@ -12,11 +12,13 @@ class ApplicationController extends GetxController {
   //handle navigation controller
   onPageChage(int index) {
     page.value = index;
+    update();
   }
 
   //on item tap navigate to page
   onNavigationBarItemTap(int index) {
     pageController.jumpToPage(index);
+    update();
   }
 
   @override

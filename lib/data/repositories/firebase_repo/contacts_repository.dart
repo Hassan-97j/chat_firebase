@@ -10,7 +10,7 @@ abstract class ContactsRepository {
 ////
   FirebaseFirestore get db => _db;
   String get token => _token;
-  Future<List<UserDataModel>> loadAllContacts();
+  Future<QuerySnapshot<UserDataModel>> loadAllContacts();
   Future<QuerySnapshot<MsgModel>> getFromMessages(UserDataModel toUserData);
   Future<QuerySnapshot<MsgModel>> getToMessages(UserDataModel toUserData);
   Future<DocumentReference<MsgModel>> saveMessage(UserDataModel toUserData);

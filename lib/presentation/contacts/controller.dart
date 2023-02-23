@@ -1,16 +1,12 @@
 import 'package:chat_firebase/domain/interface/user_model.dart';
 import 'package:chat_firebase/domain/repositories/firebase_repo/contacts_repo_impl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 import '../../data/repositories/firebase_repo/contacts_repository.dart';
 
 class ContactsController extends GetxController {
-  //ContactsController();
   final ContactsRepository contactRepo = ContactRepoImpl();
-  final db = FirebaseFirestore.instance;
-  //final token = UserStore.to.token;
-  RxList contactList = <UserDataModel>[].obs;
+  List contactList = <UserDataModel>[];
 
   @override
   void onInit() {
@@ -28,7 +24,7 @@ class ContactsController extends GetxController {
   goChat(UserDataModel toUserData) async {
     var fromMessages = await contactRepo.getFromMessages(toUserData);
     var toMessages = await contactRepo.getToMessages(toUserData);
-
+    update();
     if (fromMessages.docs.isEmpty && toMessages.docs.isEmpty) {
       await contactRepo.saveMessage(toUserData).then((value) {
         Get.toNamed('/chat', arguments: {
@@ -56,13 +52,16 @@ class ContactsController extends GetxController {
         });
       }
     }
+    update();
 //////////////////////////////////////////
   }
 
 //load all data
   loadAllData() async {
-    contactList.value = await contactRepo.loadAllContacts();
-    // contactList.assignAll(await contactRepo.loadAllContacts());
-    update();
+    var data = await contactRepo.loadAllContacts();
+    for (var doc in data.docs) {
+      contactList.add(doc.data());
+      update();
+    }
   }
 }

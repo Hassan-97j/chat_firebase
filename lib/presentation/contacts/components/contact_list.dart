@@ -11,8 +11,9 @@ class ContactList extends GetView<ContactsController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => CustomScrollView(
+    return GetBuilder<ContactsController>(
+      init: ContactsController(),
+      builder: (_) => CustomScrollView(
         slivers: [
           SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 0.w),

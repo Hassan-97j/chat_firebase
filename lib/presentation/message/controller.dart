@@ -37,6 +37,7 @@ class MessageController extends GetxController {
     }).catchError((_) {
       refreshController.refreshFailed();
     });
+    update();
   }
 
   void onLoading() {
@@ -45,6 +46,7 @@ class MessageController extends GetxController {
     }).catchError((_) {
       refreshController.loadFailed();
     });
+    update();
   }
 
   loadAllData() async {
@@ -71,9 +73,7 @@ class MessageController extends GetxController {
   getUserLocation() async {
     try {
       String address = await locationRepo.getLocationAddress();
-
       var response = await mapsRepo.getLocation(address);
-
       String? myAddress = response.results!.first.formattedAddress;
       if (myAddress != null) {
         await messageRepo.updateLocationToDB(myAddress);

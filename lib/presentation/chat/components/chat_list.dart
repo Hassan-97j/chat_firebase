@@ -13,8 +13,9 @@ class ChatList extends GetView<ChatController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Container(
+    return GetBuilder<ChatController>(
+      init: ChatController(),
+      builder: (_) => Container(
         padding: EdgeInsets.only(bottom: 50.h),
         decoration: const BoxDecoration(color: AppColors.chatbg),
         child: CustomScrollView(
