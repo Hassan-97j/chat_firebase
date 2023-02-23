@@ -1,17 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
-import 'dart:convert';
 import 'dart:math';
-import 'package:crypto/crypto.dart';
 
-/// SHA256
-String duSHA256(String input) {
-  String salt = 'EIpWsyfiy@R@X#qn17!StJNdZK1fFF8iV6ffN!goZkqt#JxO'; // 加盐
-  var bytes = utf8.encode(input + salt);
-  var digest = sha256.convert(bytes);
-
-  return digest.toString();
-}
 
 String getRandomString(int length) {
   const _chars =

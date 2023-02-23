@@ -7,7 +7,7 @@ import 'package:chat_firebase/domain/repositories/image_picker_repo_impl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import '../../app/utils/security.dart';
+import '../../app/utils/randomstring.dart';
 import 'package:get/get.dart';
 
 import '../../data/repositories/firebase_repo/chat_repository.dart';
