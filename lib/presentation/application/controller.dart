@@ -1,10 +1,8 @@
-import 'package:chat_firebase/app/config/values/values.dart';
+import 'package:chat_firebase/app/utils/widgets/bottom_nav_bar/nav_bar_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ApplicationController extends GetxController {
-  // ApplicationController();
-  // final state = ApplicationState();
   var page = 0.obs;
 
   late final List<String> tabTitles;
@@ -24,52 +22,8 @@ class ApplicationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    tabTitles = [
-      'Messages',
-      'Contact',
-      'Profile',
-    ];
-    bottomTabs = [
-      //1
-      const BottomNavigationBarItem(
-        icon: Icon(
-          Icons.message,
-          color: AppColors.thirdElementText,
-        ),
-        activeIcon: Icon(
-          Icons.message,
-          color: AppColors.secondaryElementText,
-        ),
-        label: 'Chat',
-        backgroundColor: AppColors.primaryBackground,
-      ),
-      //2
-      const BottomNavigationBarItem(
-        icon: Icon(
-          Icons.contact_page,
-          color: AppColors.thirdElementText,
-        ),
-        activeIcon: Icon(
-          Icons.contact_page,
-          color: AppColors.secondaryElementText,
-        ),
-        label: 'Contact',
-        backgroundColor: AppColors.primaryBackground,
-      ),
-      //3
-      const BottomNavigationBarItem(
-        icon: Icon(
-          Icons.person,
-          color: AppColors.thirdElementText,
-        ),
-        activeIcon: Icon(
-          Icons.person,
-          color: AppColors.secondaryElementText,
-        ),
-        label: 'Profile',
-        backgroundColor: AppColors.primaryBackground,
-      ),
-    ];
+    tabTitles = NavBarData.tabTitles;
+    bottomTabs = NavBarData.bottomTabs;
     pageController = PageController(
       initialPage: page.value,
     );

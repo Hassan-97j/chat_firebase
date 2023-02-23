@@ -1,4 +1,5 @@
 import 'package:chat_firebase/app/services/service_handler/user.dart';
+import 'package:chat_firebase/app/utils/dialogs.dart';
 import 'package:chat_firebase/data/repositories/firebase_repo/message_repo.dart';
 import 'package:chat_firebase/data/repositories/http_repo/maps_repo.dart';
 import 'package:chat_firebase/data/repositories/location_repo.dart';
@@ -17,7 +18,7 @@ class MessageController extends GetxController {
   FCMRepo fcmRepo = FCMRepoImpl();
   MapsRepo mapsRepo = MapsRepoImpl();
   LocationRepo locationRepo = LocationRepoImpl();
-  var msgList = <QueryDocumentSnapshot<MsgModel>>[].obs;
+  var msgList = <QueryDocumentSnapshot<MsgModel>>[];
   final token = UserStore.to.token;
   final RefreshController refreshController = RefreshController(
     initialRefresh: true,
@@ -47,15 +48,23 @@ class MessageController extends GetxController {
   }
 
   loadAllData() async {
-    var fromMessages = await messageRepo.getFromMessages();
-    var toMessages = await messageRepo.getToMessages();
-    msgList.clear();
-    if (fromMessages.docs.isNotEmpty) {
-      msgList.assignAll(fromMessages.docs);
+    try {
+      var fromMessages = await messageRepo.getFromMessages();
+      var toMessages = await messageRepo.getToMessages();
+      msgList.clear();
+      update();
+      if (fromMessages.docs.isNotEmpty) {
+        msgList.assignAll(fromMessages.docs);
+        update();
+      }
+      if (toMessages.docs.isNotEmpty) {
+        msgList.assignAll(toMessages.docs);
+        update();
+      }
+    } catch (e) {
+      Dialogs.showSnackbar("error in fetching messages", '$e');
     }
-    if (toMessages.docs.isNotEmpty) {
-      msgList.assignAll(toMessages.docs);
-    }
+
     update();
   }
 
@@ -73,9 +82,11 @@ class MessageController extends GetxController {
       // ignore: avoid_print
       print('error fetching location: $e');
     }
+    update();
   }
 
   getFCMToken() async {
     await fcmRepo.getFCMToken();
+    update();
   }
 }

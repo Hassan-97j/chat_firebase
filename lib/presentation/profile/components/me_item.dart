@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:chat_firebase/app/config/values/values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../app/config/values/values.dart';
 
 class MeItem extends StatelessWidget {
   MeItem({
@@ -25,12 +25,13 @@ class MeItem extends StatelessWidget {
         color: AppColors.primaryBackground,
       ),
       child: InkWell(
-        onTap: ontap,//() {},
+        onTap: ontap, 
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
                   height: 56.w,
@@ -42,7 +43,7 @@ class MeItem extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(
-                    left: 14.w,
+                    left: 20.w,
                   ),
                   height: 56.w,
                   child: Text(
@@ -56,19 +57,13 @@ class MeItem extends StatelessWidget {
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  child: Image(
-                    image: const AssetImage('assets/icons/ang.png'),
-                    height: 15.w,
-                    width: 15.w,
-                  ),
-                ),
-              ],
+            Container(
+              alignment: Alignment.center,
+              child: Image(
+                image: const AssetImage('assets/icons/ang.png'),
+                height: 15.w,
+                width: 15.w,
+              ),
             ),
           ],
         ),

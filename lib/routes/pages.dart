@@ -15,7 +15,7 @@ import '../presentation/sign_in/view.dart';
 import '../presentation/welcome/bindings.dart';
 import '../presentation/welcome/view.dart';
 import 'routes.dart';
-import '../app/middlewares/router_welcome.dart';
+//import '../app/middlewares/router_welcome.dart';
 
 class AppPages {
   static const initial = AppRoutes.initial;
@@ -28,9 +28,9 @@ class AppPages {
       name: AppRoutes.initial,
       page: () => const WelcomePage(),
       binding: WelcomeBinding(),
-      middlewares: [
-        RouteWelcomeMiddleware(priority: 1),
-      ],
+      // middlewares: [
+      //   RouteWelcomeMiddleware(priority: 1),
+      // ],
     ),
     GetPage(
       name: AppRoutes.signin,

@@ -1,4 +1,4 @@
-import 'package:chat_firebase/app/config/values/values.dart';
+import 'package:chat_firebase/app/utils/widgets/bottom_nav_bar/nav_bar_widget.dart';
 import 'package:chat_firebase/presentation/application/controller.dart';
 
 import '../contacts/view.dart';
@@ -14,17 +14,12 @@ class ApplicationPage extends GetView<ApplicationController> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
+        () => MyBottomNavBar(
           items: controller.bottomTabs,
           currentIndex: controller.page.value,
-          type: BottomNavigationBarType.fixed,
           onTap: (index) {
             controller.onNavigationBarItemTap(index);
           },
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          unselectedItemColor: AppColors.tabBarElement,
-          selectedItemColor: AppColors.thirdElementText,
         ),
       ),
       body: PageView(

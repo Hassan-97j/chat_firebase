@@ -24,21 +24,23 @@ class ProfilePage extends GetView<ProfileController> {
           ),
         ),
       ),
-      body: Obx(
-        () => CustomScrollView(
+      body:GetBuilder<ProfileController>(
+      init: ProfileController(),
+      builder: (_) => CustomScrollView(
           slivers: [
             SliverPadding(
               padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
               sliver: SliverToBoxAdapter(
-                child: controller.headerDetails.value == null
-                    ? Container()
+                child: controller.headerDetails == null
+                    ? 
+                    Container()
                     : HeadItem(
-                        url: controller.headerDetails.value?.photoUrl ??
+                        url: controller.headerDetails?.photoUrl ??
                             "",
                         name:
-                            controller.headerDetails.value?.displayName ??
+                            controller.headerDetails?.displayName ??
                                 "",
-                        id: controller.headerDetails.value?.accessToken ??
+                        id: controller.headerDetails?.accessToken ??
                             "",
                       ),
               ),

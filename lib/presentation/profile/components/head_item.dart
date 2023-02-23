@@ -1,10 +1,9 @@
 // ignore_for_file: must_be_immutable
-
-import 'package:chat_firebase/app/config/values/values.dart';
-import 'package:chat_firebase/app/utils/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../app/config/values/values.dart';
+import '../../../app/utils/widgets/widgets.dart';
+
 
 class HeadItem extends StatelessWidget {
   HeadItem({
@@ -25,6 +24,7 @@ class HeadItem extends StatelessWidget {
           EdgeInsets.only(top: 30.w, left: 15.w, right: 15.w, bottom: 15.w),
       margin: EdgeInsets.only(bottom: 30.w),
       decoration: BoxDecoration(
+        color: AppColors.primaryBackground,
         borderRadius: BorderRadius.circular(0),
         boxShadow: const [
           BoxShadow(
@@ -55,83 +55,45 @@ class HeadItem extends StatelessWidget {
                   ),
                 ),
               ),
-              // SizedBox(
-              //   width: 250.w,
-              //   child: Row(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Container(
-              //         padding: EdgeInsets.only(
-              //             top: 5.w, left: 15.w, right: 0.w, bottom: 0.w),
-              //         alignment: Alignment.centerLeft,
-              //         width: 190.w,
-              //         height: 54.w,
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           children: [
-              //             Text(
-              //               name,
-              //               overflow: TextOverflow.clip,
-              //               style: TextStyle(
-              //                 fontSize: 15.sp,
-              //                 fontWeight: FontWeight.bold,
-              //                 color: AppColors.thirdElement,
-              //               ),
-              //             ),
-              //             Text(
-              //               id,
-              //               overflow: TextOverflow.clip,
-              //               style: TextStyle(
-              //                 fontSize: 13.sp,
-              //                 fontWeight: FontWeight.normal,
-              //                 color: AppColors.thirdElementText,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-            ],
-          ),
-          SizedBox(
-            width: 250.w,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(
-                      top: 5.w, left: 15.w, right: 0.w, bottom: 0.w),
-                  alignment: Alignment.centerLeft,
-                  width: 190.w,
-                  height: 54.w,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.thirdElement,
-                        ),
+              SizedBox(
+                width: 250.w,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: 5.w, left: 15.w, right: 0.w, bottom: 0.w),
+                      alignment: Alignment.centerLeft,
+                      width: 190.w,
+                      height: 54.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            name,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.thirdElement,
+                            ),
+                          ),
+                          Text(
+                            id,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.normal,
+                              color: AppColors.thirdElementText,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        id,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.thirdElementText,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

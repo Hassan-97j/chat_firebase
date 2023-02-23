@@ -11,6 +11,7 @@ class AuthRepositoryImpl implements AuthRepository {
     scopes: <String>['openid'],
   );
   final db = FirebaseFirestore.instance;
+  final fbauth = FirebaseAuth.instance;
   @override
   Future<void> signInWithGoogle() async {
     try {
@@ -23,7 +24,7 @@ class AuthRepositoryImpl implements AuthRepository {
           idToken: googleAuthentication.idToken,
           accessToken: googleAuthentication.accessToken,
         );
-        await FirebaseAuth.instance.signInWithCredential(credential);
+        await fbauth.signInWithCredential(credential);
         //////////////////////////////////////////////////////////////////
         // define user profile using the model
         String displayName = user.displayName ?? user.email;
@@ -82,7 +83,13 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> signOut() async {
-    await googleSignIn.signOut();
+    try {
+      await googleSignIn.signOut();
+      await fbauth.signOut();
+    } catch (e) {
+      // ignore: avoid_print
+      print('error with signout method: $e');
+    }
   }
 
   @override
