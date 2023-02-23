@@ -7,8 +7,11 @@ import '../../../app/services/service_handler/user.dart';
 import '../../../data/repositories/firebase_repo/contacts_repository.dart';
 
 class ContactRepoImpl implements ContactsRepository {
-  final db = FirebaseFirestore.instance;
-  final token = UserStore.to.token;
+  @override
+  get db => FirebaseFirestore.instance;
+
+  @override
+  get token => UserStore.to.token;
 
   @override
   Future<List<UserDataModel>> loadAllContacts() async {

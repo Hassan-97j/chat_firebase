@@ -5,8 +5,14 @@ import '../../../app/services/service_handler/user.dart';
 import '../../../data/repositories/firebase_repo/fcm_repo.dart';
 
 class FCMRepoImpl implements FCMRepo {
-  final token = UserStore.to.token;
-  final db = FirebaseFirestore.instance;
+  // final token = UserStore.to.token;
+  // final db = FirebaseFirestore.instance;
+  @override
+  get db => FirebaseFirestore.instance;
+
+  @override
+  get token => UserStore.to.token;
+
   @override
   Future<String?> getFCMToken() async {
     try {
@@ -19,7 +25,7 @@ class FCMRepoImpl implements FCMRepo {
           var docId = user.docs.first.id;
           await db.collection("users").doc(docId).update(
             {
-              "fcmtoken": fcmToken.toString(),
+              "fcmtoken": fcmToken,
             },
           );
         }

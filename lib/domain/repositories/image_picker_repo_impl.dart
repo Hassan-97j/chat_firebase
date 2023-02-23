@@ -3,8 +3,14 @@ import 'package:chat_firebase/data/repositories/image_picker_repo.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickerRepoImpl implements ImagePickerRepo {
-  final ImagePicker imagePicker = ImagePicker();
-  File? photo;
+  final ImagePicker _imagePicker = ImagePicker();
+  File? _photo;
+  @override
+  File? get photo => _photo;
+  @override
+  ImagePicker get imagePicker => _imagePicker;
+
+  set photo(File? value) => _photo = value;
   @override
   Future imageFromCamera() async {
     final pickedFile = await imagePicker.pickImage(source: ImageSource.camera);

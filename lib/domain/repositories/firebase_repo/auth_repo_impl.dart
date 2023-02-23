@@ -1,17 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../../app/services/service_handler/user.dart';
 import '../../../data/repositories/firebase_repo/auth_repository.dart';
 import '../../interface/user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  GoogleSignIn googleSignIn = GoogleSignIn(
-    scopes: <String>['openid'],
-  );
-  final db = FirebaseFirestore.instance;
-  final fbauth = FirebaseAuth.instance;
+///////////////////
+  @override
+  get db => FirebaseFirestore.instance;
+
+  @override
+  get fbAuth => FirebaseAuth.instance;
+
+  @override
+  get googleSignIn => GoogleSignIn(scopes: <String>['openid']);
+///////////////////
   @override
   Future<void> signInWithGoogle() async {
     try {
@@ -24,7 +28,7 @@ class AuthRepositoryImpl implements AuthRepository {
           idToken: googleAuthentication.idToken,
           accessToken: googleAuthentication.accessToken,
         );
-        await fbauth.signInWithCredential(credential);
+        await fbAuth.signInWithCredential(credential);
         //////////////////////////////////////////////////////////////////
         // define user profile using the model
         String displayName = user.displayName ?? user.email;
@@ -69,10 +73,6 @@ class AuthRepositoryImpl implements AuthRepository {
                   toFirestore: (UserDataModel userdata, options) =>
                       userdata.toFirestore())
               .add(data);
-
-          // ignore: avoid_print
-          print('Login Success');
-          // Get.offAndToNamed(AppRoutes.application);
         }
       }
     } catch (e) {
@@ -85,7 +85,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signOut() async {
     try {
       await googleSignIn.signOut();
-      await fbauth.signOut();
+      await fbAuth.signOut();
     } catch (e) {
       // ignore: avoid_print
       print('error with signout method: $e');

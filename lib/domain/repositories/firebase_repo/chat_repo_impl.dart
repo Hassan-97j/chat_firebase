@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -9,17 +7,33 @@ import '../../interface/msg_con_model.dart';
 import '../../interface/user_model.dart';
 
 class ChatrepositoryImpl implements ChatRepository {
-  final db = FirebaseFirestore.instance;
-  // ignore: prefer_typing_uninitialized_variables
-  var docId;
-  File? photo;
-  var storage = FirebaseStorage.instance;
-  final userId = UserStore.to.token;
+  // final db = FirebaseFirestore.instance;
+  // // ignore: prefer_typing_uninitialized_variables
+  // var docId;
+  // File? photo;
+  // var storage = FirebaseStorage.instance;
+  // final userId = UserStore.to.token;
+  @override
+  get db => FirebaseFirestore.instance;
+
+  @override
+  // ignore: recursive_getters
+  get docId => docId;
+
+  @override
+  // ignore: recursive_getters
+  get photo => photo;
+
+  @override
+  get storage => FirebaseStorage.instance;
+
+  @override
+  get userId => UserStore.to.token;
 
   @override
   Future<String> getImgUrl(String name) async {
     try {
-      final spaceRef = storage.ref("Chat").child(name);
+      final spaceRef = storage.ref("chat").child(name);
       var str = await spaceRef.getDownloadURL();
       return str;
     } catch (e) {
@@ -31,28 +45,10 @@ class ChatrepositoryImpl implements ChatRepository {
 
   @override
   Future uploadFile(String fileName) async {
-    // if (photo == null) return;
-    // final fileName = getRandomString(15) + photo!.path;
     try {
-      final ref =  FirebaseStorage.instance.ref("chat").child(fileName);
+      final ref = storage.ref("chat").child(fileName);
       var eventSnapShot = ref.putFile(photo!).snapshotEvents;
       return eventSnapShot;
-      // .listen((event) async {
-      //   switch (event.state) {
-      //     case TaskState.running:
-      //       break;
-      //     case TaskState.paused:
-      //       break;
-      //     case TaskState.success:
-      //       String imgUrl = await getImgUrl(fileName);
-      //       await sendMessage(imgUrl);
-      //       break;
-      //     case TaskState.canceled:
-      //       break;
-      //     case TaskState.error:
-      //       break;
-      //   }
-      // });
     } catch (e) {
       // ignore: avoid_print
       print('there is an error with file upload: $e');
@@ -114,7 +110,6 @@ class ChatrepositoryImpl implements ChatRepository {
           .get();
       var location = userLocation.docs.first.data().location;
       if (location != '') {
-        // state.toLocation.value
         tolacation = location ?? "Unknown";
       }
     } catch (e) {

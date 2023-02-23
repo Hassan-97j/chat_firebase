@@ -5,8 +5,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../app/services/service_handler/user.dart';
 
 class MessageRepoImpl implements MessageRepo {
-  final db = FirebaseFirestore.instance;
-  final token = UserStore.to.token;
+  @override
+  get db => FirebaseFirestore.instance;
+
+  @override
+  get token => UserStore.to.token;
 
   @override
   Future<QuerySnapshot<MsgModel>> getFromMessages() async {
