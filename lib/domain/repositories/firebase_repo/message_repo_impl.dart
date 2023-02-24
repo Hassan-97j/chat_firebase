@@ -53,15 +53,14 @@ class MessageRepoImpl implements MessageRepo {
   }
 
   @override
-  updateLocationToDB(String myAddress) async {
+  Future<void> updateLocationToDB(String myAddress) async {
     try {
       var userLocation =
           await db.collection("users").where("id", isEqualTo: token).get();
+      // return userLocation;
       if (userLocation.docs.isNotEmpty) {
         var docId = userLocation.docs.first.id;
-        await db.collection("users").doc(docId).update(
-          {"location": myAddress},
-        );
+        await db.collection("users").doc(docId).update({"location": myAddress});
       }
     } catch (e) {
       // ignore: avoid_print

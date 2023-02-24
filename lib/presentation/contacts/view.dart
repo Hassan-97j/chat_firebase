@@ -24,7 +24,13 @@ class ContactsPage extends GetView<ContactsController> {
             ),
           ),
         ),
-        body: const ContactList(),
+        body: !controller.isLoading
+            ? controller.contactList.isEmpty
+                ? const Center(
+                    child: Text('No Data'),
+                  )
+                : const ContactList()
+            : const Center(child: CircularProgressIndicator()),
       ),
     );
   }

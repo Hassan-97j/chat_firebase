@@ -1,3 +1,4 @@
+import 'package:chat_firebase/app/utils/dialogs.dart';
 import 'package:get/get.dart';
 import '../../data/repositories/firebase_repo/auth_repository.dart';
 import '../../data/repositories/firebase_repo/profile_repository.dart';
@@ -12,6 +13,7 @@ class ProfileController extends GetxController {
   UserLoginResponseEntityModel? headerDetails;
   var meListItem = <MeListItemModel>[];
   final ProfileRepository profileRepository = ProfileRepoImpl();
+  bool isLoading = true;
 
   @override
   void onInit() {
@@ -21,8 +23,10 @@ class ProfileController extends GetxController {
   }
 
   Future<void> onLogOut() async {
+    Dialogs.showProgressBar();
     UserStore.to.onLogout();
     await authRepository.signOut();
+    Dialogs.hideProgressBar();
     Get.offAndToNamed(AppRoutes.signin);
     update();
   }
@@ -33,8 +37,13 @@ class ProfileController extends GetxController {
     update();
   }
 
-  loadMeListItems() {
-    meListItem = profileRepository.getMeListItems();
+  loadMeListItems() async {
+    isLoading = true;
+    await Future.delayed(const Duration(milliseconds: 1500), () {
+      meListItem = profileRepository.getMeListItems();
+    });
+
+    isLoading = false;
     update();
   }
 }

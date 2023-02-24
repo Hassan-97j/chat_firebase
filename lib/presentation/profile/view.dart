@@ -24,49 +24,52 @@ class ProfilePage extends GetView<ProfileController> {
           ),
         ),
       ),
-      body:GetBuilder<ProfileController>(
-      init: ProfileController(),
-      builder: (_) => CustomScrollView(
-          slivers: [
-            SliverPadding(
-              padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
-              sliver: SliverToBoxAdapter(
-                child: controller.headerDetails == null
-                    ? 
-                    Container()
-                    : HeadItem(
-                        url: controller.headerDetails?.photoUrl ??
-                            "",
-                        name:
-                            controller.headerDetails?.displayName ??
-                                "",
-                        id: controller.headerDetails?.accessToken ??
-                            "",
+      body: GetBuilder<ProfileController>(
+        init: ProfileController(),
+        builder: (_) => !controller.isLoading
+            ? controller.meListItem.isEmpty
+                ? const Center(child: Text('No Data'))
+                : CustomScrollView(
+                    slivers: [
+                      SliverPadding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 0.w, horizontal: 0.w),
+                        sliver: SliverToBoxAdapter(
+                          child: controller.headerDetails == null
+                              ? Container()
+                              : HeadItem(
+                                  url: controller.headerDetails?.photoUrl ?? "",
+                                  name: controller.headerDetails?.displayName ??
+                                      "",
+                                  id: controller.headerDetails?.accessToken ??
+                                      "",
+                                ),
+                        ),
                       ),
-              ),
-            ),
-            SliverPadding(
-              padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    var item = controller.meListItem[index];
-                    return MeItem(
-                      assetName: item.icon ?? "",
-                      name: item.name ?? "",
-                      ontap: () {
-                        if (item.route == '/logout') {
-                          controller.onLogOut();
-                        }
-                      },
-                    );
-                  },
-                  childCount: controller.meListItem.length,
-                ),
-              ),
-            ),
-          ],
-        ),
+                      SliverPadding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 0.w, horizontal: 0.w),
+                        sliver: SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              var item = controller.meListItem[index];
+                              return MeItem(
+                                assetName: item.icon ?? "",
+                                name: item.name ?? "",
+                                ontap: () {
+                                  if (item.route == '/logout') {
+                                    controller.onLogOut();
+                                  }
+                                },
+                              );
+                            },
+                            childCount: controller.meListItem.length,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+            : const Center(child: CircularProgressIndicator()),
       ),
     );
   }

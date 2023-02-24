@@ -22,7 +22,7 @@ abstract class ChatRepository {
   Future uploadFile(String fileName);
   Future<DocumentReference<MsgcontentModel>> addMessage(
       String sendContent, String type);
-  updateMessage(String lastMsg);
-  getLocationFromDB(String id, String tolacation);
+  Future<void> updateMessage(String lastMsg);
+  Future<void> getLocationFromDB(String id, String tolacation);
   Query<MsgcontentModel> orderMsgByLastTime();
 }

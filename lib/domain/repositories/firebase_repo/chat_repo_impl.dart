@@ -86,7 +86,7 @@ class ChatrepositoryImpl implements ChatRepository {
   }
 
   @override
-  updateMessage(String lastMsg) async {
+  Future<void> updateMessage(String lastMsg) async {
     await db.collection("message").doc(docId).update(
       {
         "last_msg": lastMsg, // sendContent,
@@ -96,11 +96,11 @@ class ChatrepositoryImpl implements ChatRepository {
   }
 
   @override
-  getLocationFromDB(String id, String tolacation) async {
+  Future<void> getLocationFromDB(String id, String tolacation) async {
     try {
       var userLocation = await db
           .collection("users")
-          .where("id", isEqualTo: id) //state.toId.value)
+          .where("id", isEqualTo: id)
           .withConverter(
             fromFirestore: UserDataModel.fromFirestore,
             toFirestore: (UserDataModel userData, options) {

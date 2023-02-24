@@ -94,7 +94,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   checkUser() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         // ignore: avoid_print
         print('User is currently logged out');

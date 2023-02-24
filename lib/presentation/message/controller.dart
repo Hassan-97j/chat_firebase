@@ -20,9 +20,8 @@ class MessageController extends GetxController {
   LocationRepo locationRepo = LocationRepoImpl();
   var msgList = <QueryDocumentSnapshot<MsgModel>>[];
   final token = UserStore.to.token;
-  final RefreshController refreshController = RefreshController(
-    initialRefresh: true,
-  );
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: true);
 
   @override
   void onReady() {
@@ -66,7 +65,6 @@ class MessageController extends GetxController {
     } catch (e) {
       Dialogs.showSnackbar("error in fetching messages", '$e');
     }
-
     update();
   }
 
