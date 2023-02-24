@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../../app/services/service_handler/user.dart';
 import '../../../data/repositories/firebase_repo/chat_repository.dart';
@@ -9,48 +6,11 @@ import '../../interface/msg_con_model.dart';
 import '../../interface/user_model.dart';
 
 class ChatrepositoryImpl implements ChatRepository {
-  File? _photo;
-  // ignore: prefer_typing_uninitialized_variables
-  // var docId;
-  set photo(File? value) => _photo = value;
-
   @override
   get db => FirebaseFirestore.instance;
 
   @override
-  File? get photo => _photo;
-
-  @override
-  get storage => FirebaseStorage.instance;
-
-  @override
   get userId => UserStore.to.token;
-
-  @override
-  Future<String> getImgUrl(String name) async {
-    try {
-      final spaceRef = storage.ref("chat").child(name);
-      var str = await spaceRef.getDownloadURL();
-      return str;
-    } catch (e) {
-      // ignore: avoid_print
-      print('there is an error with getting image url: $e');
-      rethrow;
-    }
-  }
-
-  @override
-  Stream<TaskSnapshot> uploadFile(String fileName) {
-    try {
-      final ref = storage.ref("chat").child(fileName);
-      var eventSnapShot = ref.putFile(photo!).snapshotEvents;
-      return eventSnapShot;
-    } catch (e) {
-      // ignore: avoid_print
-      print('there is an error with file upload: $e');
-      rethrow;
-    }
-  }
 
   @override
   Future<DocumentReference<MsgcontentModel>> addMessage(

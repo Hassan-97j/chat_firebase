@@ -9,6 +9,6 @@ abstract class ImagePickerRepo {
 ////
   ImagePicker get imagePicker => _imagePicker;
   File? get photo => _photo;
-  Future<File?> imageFromGallery();
-  Future<File?> imageFromCamera();
+  Future<XFile?> imageFromGallery();
+  Future<XFile?> imageFromCamera();
 }

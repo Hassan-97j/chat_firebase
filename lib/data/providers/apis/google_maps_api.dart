@@ -13,9 +13,9 @@ class GoogleMapAPI extends APIRequestRepresentable {
     this.secretKey,
   });
 
-  GoogleMapAPI.fetchLocation(String addresss)
+  GoogleMapAPI.fetchLocation(String address)
       : this._(
-          address: addresss,
+          address: address,
         );
 
   @override

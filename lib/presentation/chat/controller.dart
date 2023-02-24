@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:chat_firebase/app/services/service_handler/user.dart';
+import 'package:chat_firebase/data/repositories/firebase_repo/storage_repo.dart';
 import 'package:chat_firebase/data/repositories/image_picker_repo.dart';
 import 'package:chat_firebase/domain/interface/msg_con_model.dart';
 import 'package:chat_firebase/domain/repositories/firebase_repo/chat_repo_impl.dart';
+import 'package:chat_firebase/domain/repositories/firebase_repo/storage_repo_impl.dart';
 import 'package:chat_firebase/domain/repositories/image_picker_repo_impl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -15,6 +17,7 @@ import '../../data/repositories/firebase_repo/chat_repository.dart';
 class ChatController extends GetxController {
   final ChatRepository chatRepository = ChatrepositoryImpl();
   final ImagePickerRepo imagePickerRepo = ImagePickerRepoImpl();
+  final StorageRepo storageRepo = StorageRepoImpl();
   var msgContentList = <MsgcontentModel>[];
   var toId = "";
   var toName = "";
@@ -31,26 +34,39 @@ class ChatController extends GetxController {
   File? photo;
 
   Future imageFromGallery() async {
-    photo = await imagePickerRepo.imageFromGallery();
+    var pickedFile = await imagePickerRepo.imageFromGallery();
+    if (pickedFile != null) {
+      photo = File(pickedFile.path);
+    } else {
+      // ignore: avoid_print
+      print('no image selected');
+    }
     update();
   }
 
-  Future imageFromCamera() async {
-    photo = await imagePickerRepo.imageFromCamera();
+  imageFromCamera() async {
+    var pickedFile = await imagePickerRepo.imageFromCamera();
+    if (pickedFile != null) {
+      photo = File(pickedFile.path);
+    } else {
+      // ignore: avoid_print
+      print('no image selected');
+    }
+
     update();
   }
 
   Future getImgUrl(String name) async {
-    var str = await chatRepository.getImgUrl(name);
+    var str = await storageRepo.getImgUrl(name);
     update();
     return str;
   }
 
-   uploadFile() async {
+  Future uploadFile() async {
+    if (photo == null) return;
+    final fileName = getRandomString(15) + photo!.path;
     try {
-      if (photo == null) return;
-      final fileName = getRandomString(15) + photo!.path;
-      chatRepository.uploadFile(fileName).listen((event) async {
+      storageRepo.uploadFile(fileName, photo).listen((event) async {
         switch (event.state) {
           case TaskState.running:
             break;
@@ -82,8 +98,10 @@ class ChatController extends GetxController {
       // uploadFile();
       textController.clear();
       Get.focusScope?.unfocus();
+      update();
     });
-    await chatRepository.updateMessage("[image]", docId);
+    await chatRepository.updateMessage(" [image] ", docId);
+    update();
   }
 
   @override

@@ -12,40 +12,28 @@ class ImagePickerRepoImpl implements ImagePickerRepo {
 
   set photo(File? value) => _photo = value;
   @override
-  Future<File?> imageFromCamera() async {
+  Future<XFile?> imageFromCamera() async {
     try {
       final pickedFile =
           await imagePicker.pickImage(source: ImageSource.camera);
-      if (pickedFile != null) {
-        photo = File(pickedFile.path);
-      } else {
-        // ignore: avoid_print
-        print('no image selected');
-      }
+      return pickedFile;
     } catch (e) {
       // ignore: avoid_print
       print('error withimageFromCamera(): $e');
       rethrow;
     }
-    return null;
   }
 
   @override
-  Future<File?> imageFromGallery() async {
+  Future<XFile?> imageFromGallery() async {
     try {
       final pickedFile =
           await imagePicker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        photo = File(pickedFile.path);
-      } else {
-        // ignore: avoid_print
-        print('no picture clicked');
-      }
+      return pickedFile;
     } catch (e) {
       // ignore: avoid_print
       print('error imageFromGallery(): $e');
       rethrow;
     }
-    return null;
   }
 }

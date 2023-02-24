@@ -72,6 +72,7 @@ class MessageController extends GetxController {
     try {
       String address = await locationRepo.getLocationAddress();
       var response = await mapsRepo.getLocation(address);
+      // print('location ka response ye hai bhai dekh le ghalt hai bad request theek kr lena $response');
       if (response != null) {
         await messageRepo.updateLocationToDB(response);
       }

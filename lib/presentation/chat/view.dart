@@ -32,7 +32,7 @@ class ChatPage extends GetView<ChatController> {
                 onTap: () async {
                   await controller.imageFromCamera();
                   Get.back();
-                  await controller.uploadFile();
+                   controller.uploadFile();
                 },
               ),
             ],
