@@ -68,4 +68,22 @@ class MessageRepoImpl implements MessageRepo {
       rethrow;
     }
   }
+
+  @override
+  Future<void> updateFCMTokenToDb(String myToken) async {
+    try {
+      var user =
+          await db.collection("users").where("id", isEqualTo: token).get();
+      if (user.docs.isNotEmpty) {
+        var docId = user.docs.first.id;
+        await db.collection("users").doc(docId).update(
+          {"fcmtoken": myToken},
+        );
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print('updateFCMTokenToDb() method in message repo: $e');
+      rethrow;
+    }
+  }
 }

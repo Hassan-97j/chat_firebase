@@ -23,6 +23,7 @@ class ChatPage extends GetView<ChatController> {
                 onTap: () async {
                   await controller.imageFromGallery();
                   Get.back();
+                  await controller.uploadFile();
                 },
               ),
               ListTile(
@@ -31,6 +32,7 @@ class ChatPage extends GetView<ChatController> {
                 onTap: () async {
                   await controller.imageFromCamera();
                   Get.back();
+                  await controller.uploadFile();
                 },
               ),
             ],

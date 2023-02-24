@@ -10,4 +10,5 @@ abstract class MessageRepo {
   Future<QuerySnapshot<MsgModel>> getFromMessages();
   Future<QuerySnapshot<MsgModel>> getToMessages();
   Future<void> updateLocationToDB(String myAddress);
+  Future<void> updateFCMTokenToDb(String myToken);
 }

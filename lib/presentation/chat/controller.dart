@@ -32,24 +32,25 @@ class ChatController extends GetxController {
 
   Future imageFromGallery() async {
     photo = await imagePickerRepo.imageFromGallery();
+    update();
   }
 
   Future imageFromCamera() async {
     photo = await imagePickerRepo.imageFromCamera();
+    update();
   }
 
   Future getImgUrl(String name) async {
     var str = await chatRepository.getImgUrl(name);
+    update();
     return str;
   }
 
-  Future uploadFile() async {
-    if (photo == null) return;
-    final fileName = getRandomString(15) + photo!.path;
+   uploadFile() async {
     try {
-      //   final ref = FirebaseStorage.instance.ref("chat").child(fileName);
-      //  var abx = ref.putFile(photo!).snapshotEvents;
-      chatRepository.uploadFile(fileName).asStream().listen((event) async {
+      if (photo == null) return;
+      final fileName = getRandomString(15) + photo!.path;
+      chatRepository.uploadFile(fileName).listen((event) async {
         switch (event.state) {
           case TaskState.running:
             break;
@@ -57,7 +58,8 @@ class ChatController extends GetxController {
             break;
           case TaskState.success:
             String imgUrl = await getImgUrl(fileName);
-            sendImageMessage(imgUrl);
+            await sendImageMessage(imgUrl);
+            update();
             break;
           case TaskState.canceled:
             break;
@@ -72,13 +74,16 @@ class ChatController extends GetxController {
   }
 
   sendImageMessage(String url) async {
-    await chatRepository.addMessage(url, "image").then((DocumentReference doc) {
+    await chatRepository
+        .addMessage(url, "image", docId)
+        .then((DocumentReference doc) {
       // ignore: avoid_print
-      print('document data added successfully with id ${doc.id}');
+      print('image added successfully with id ${doc.id}');
+      // uploadFile();
       textController.clear();
       Get.focusScope?.unfocus();
     });
-    await chatRepository.updateMessage("[image]");
+    await chatRepository.updateMessage("[image]", docId);
   }
 
   @override
@@ -99,14 +104,15 @@ class ChatController extends GetxController {
   sendMessage() async {
     String sendContent = textController.text;
     await chatRepository
-        .addMessage(sendContent, "text")
+        .addMessage(sendContent, "text", docId)
         .then((DocumentReference doc) {
       // ignore: avoid_print
       print('document data added successfully with id ${doc.id}');
       textController.clear();
       Get.focusScope?.unfocus();
+      update();
     });
-    await chatRepository.updateMessage(sendContent);
+    await chatRepository.updateMessage(sendContent, docId);
     update();
   }
 
@@ -124,7 +130,7 @@ class ChatController extends GetxController {
   }
 
   orderMessagesByLAstAdd() async {
-    var orderedMessages = chatRepository.orderMsgByLastTime();
+    var orderedMessages = chatRepository.orderMsgByLastTime(docId);
     listener = orderedMessages.snapshots();
     msgContentList.clear();
     listener.listen((event) {

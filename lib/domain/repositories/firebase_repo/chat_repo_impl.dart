@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -7,22 +9,16 @@ import '../../interface/msg_con_model.dart';
 import '../../interface/user_model.dart';
 
 class ChatrepositoryImpl implements ChatRepository {
-  // final db = FirebaseFirestore.instance;
-  // // ignore: prefer_typing_uninitialized_variables
+  File? _photo;
+  // ignore: prefer_typing_uninitialized_variables
   // var docId;
-  // File? photo;
-  // var storage = FirebaseStorage.instance;
-  // final userId = UserStore.to.token;
+  set photo(File? value) => _photo = value;
+
   @override
   get db => FirebaseFirestore.instance;
 
   @override
-  // ignore: recursive_getters
-  get docId => docId;
-
-  @override
-  // ignore: recursive_getters
-  get photo => photo;
+  File? get photo => _photo;
 
   @override
   get storage => FirebaseStorage.instance;
@@ -44,7 +40,7 @@ class ChatrepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future uploadFile(String fileName) async {
+  Stream<TaskSnapshot> uploadFile(String fileName) {
     try {
       final ref = storage.ref("chat").child(fileName);
       var eventSnapShot = ref.putFile(photo!).snapshotEvents;
@@ -58,17 +54,18 @@ class ChatrepositoryImpl implements ChatRepository {
 
   @override
   Future<DocumentReference<MsgcontentModel>> addMessage(
-      String sendContent, String type) async {
+      String sendContent, String type, var getDocID) async {
     try {
       final content = MsgcontentModel(
         uid: userId,
         content: sendContent,
-        type: type, //"text",
+        type: type,
         addtime: Timestamp.now(),
       );
+
       var addMsg = await db
           .collection("message")
-          .doc(docId)
+          .doc(getDocID)
           .collection("msglist")
           .withConverter(
             fromFirestore: MsgcontentModel.fromFirestore,
@@ -86,17 +83,20 @@ class ChatrepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future<void> updateMessage(String lastMsg) async {
-    await db.collection("message").doc(docId).update(
+  Future<void> updateMessage(String lastMsg, var getDocID) async {
+    await db.collection("message").doc(getDocID).update(
       {
-        "last_msg": lastMsg, // sendContent,
+        "last_msg": lastMsg,
         "last_time": Timestamp.now(),
       },
     );
   }
 
   @override
-  Future<void> getLocationFromDB(String id, String tolacation) async {
+  Future<void> getLocationFromDB(
+    String id,
+    String tolacation,
+  ) async {
     try {
       var userLocation = await db
           .collection("users")
@@ -119,11 +119,11 @@ class ChatrepositoryImpl implements ChatRepository {
   }
 
   @override
-  Query<MsgcontentModel> orderMsgByLastTime() {
+  Query<MsgcontentModel> orderMsgByLastTime(var getDocID) {
     try {
       var mesaaseg = db
           .collection("message")
-          .doc(docId)
+          .doc(getDocID)
           .collection("msglist")
           .withConverter(
             fromFirestore: MsgcontentModel.fromFirestore,
@@ -135,7 +135,7 @@ class ChatrepositoryImpl implements ChatRepository {
       return mesaaseg;
     } catch (e) {
       // ignore: avoid_print
-      print('erroe with orderMsgByLastTime() method: $e');
+      print('error with orderMsgByLastTime() method: $e');
       rethrow;
     }
   }

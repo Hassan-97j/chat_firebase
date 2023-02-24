@@ -7,15 +7,15 @@ import '../../interface/my_location_model.dart';
 
 class MapsRepoImpl implements MapsRepo {
   @override
-  Future<MyLocationModel> getLocation(String address) async {
+  Future<String> getLocation(String address) async {
     try {
       final response = await GoogleMapAPI.fetchLocation(address).request();
       MyLocationModel locModel =
           MyLocationModel.fromJson(json.decode(response));
-      return locModel;
+      return locModel.results!.first.formattedAddress!;
     } catch (e) {
       // ignore: avoid_print
-      print('repo exception $e');
+      print('repo exception: $e');
       rethrow;
     }
   }

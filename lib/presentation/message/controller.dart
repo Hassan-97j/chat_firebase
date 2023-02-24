@@ -72,9 +72,8 @@ class MessageController extends GetxController {
     try {
       String address = await locationRepo.getLocationAddress();
       var response = await mapsRepo.getLocation(address);
-      String? myAddress = response.results!.first.formattedAddress;
-      if (myAddress != null) {
-        await messageRepo.updateLocationToDB(myAddress);
+      if (response != null) {
+        await messageRepo.updateLocationToDB(response);
       }
     } catch (e) {
       // ignore: avoid_print
@@ -84,7 +83,11 @@ class MessageController extends GetxController {
   }
 
   getFCMToken() async {
-    await fcmRepo.getFCMToken();
+    var token = await fcmRepo.getFCMToken();
+    if (token != null) {
+      await messageRepo.updateFCMTokenToDb(token);
+    }
+
     update();
   }
 }

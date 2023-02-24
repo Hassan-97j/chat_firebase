@@ -67,7 +67,7 @@ class ContactsController extends GetxController {
     isLoading = true;
     var data = await contactRepo.loadAllContacts();
     for (var doc in data.docs) {
-      contactList.add(doc.data());
+      contactList.assign(doc.data());
       update();
     }
     isLoading = false;
