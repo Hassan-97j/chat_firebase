@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Chatter',
+          title: 'ChatBox',
           theme: AppTheme.light,
           initialRoute: AppRoutes.initial,
           getPages: AppPages.routes,
