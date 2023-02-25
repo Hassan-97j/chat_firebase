@@ -32,7 +32,7 @@ class ChatPage extends GetView<ChatController> {
                 onTap: () async {
                   await controller.imageFromCamera();
                   Get.back();
-                   controller.uploadFile();
+                  controller.uploadFile();
                 },
               ),
             ],
@@ -92,7 +92,7 @@ class ChatPage extends GetView<ChatController> {
                           ),
                         ),
                         errorWidget: (context, url, error) => const Image(
-                          image: AssetImage('assets/images/feature-1.png'),
+                          image: AssetImage('assets/images/ic_launcher.png'),
                         ),
                       ),
                     ),

@@ -49,7 +49,7 @@ class MsgListItem extends StatelessWidget {
                     ),
                   ),
                   errorWidget: (context, url, error) => const Image(
-                    image: AssetImage('assets/images/feature-1.png'),
+                    image: AssetImage('assets/images/ic_launcher.png'),
                   ),
                 ),
               ),
