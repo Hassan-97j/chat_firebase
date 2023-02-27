@@ -5,6 +5,8 @@ class AppBorderRadius {
 // circular 20 border radius geometry
   static BorderRadiusGeometry get circ20BRG =>
       const BorderRadius.all(Radius.circular(20));
+   static BorderRadius get circ20BR =>
+      const BorderRadius.all(Radius.circular(20));
   static BorderRadiusGeometry get circ35BRG =>
       const BorderRadius.all(Radius.circular(35));
   static BorderRadiusGeometry get circ54BRG =>

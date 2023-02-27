@@ -18,7 +18,7 @@ class ContactListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      onTap: onTap,
       leading: CircleAvatar(
         radius: 27,
         child: CachedNetworkImage(imageUrl: imgUrl),

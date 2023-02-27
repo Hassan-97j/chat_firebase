@@ -1,4 +1,5 @@
 import 'package:chat_firebase/app/config/app_config.dart/ap_borders.dart';
+import 'package:chat_firebase/app/config/app_config.dart/app_paddings.dart';
 import 'package:chat_firebase/color_schemes.g.dart';
 import 'package:flutter/material.dart';
 
@@ -34,13 +35,7 @@ class AppTheme {
     ),
 /////////////////////////////////////////////////////
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      // selectedIconTheme: IconThemeData(
-      //   color: lightColorScheme.surface,
-      //   size: 24,
-      // ),
       backgroundColor: lightColorScheme.primary,
-      // unselectedLabelStyle: const  TextStyle(fontSize: 12),
-      // selectedLabelStyle: const TextStyle(fontSize: 12),
       unselectedItemColor: lightColorScheme.secondary,
       selectedItemColor: lightColorScheme.surface,
     ),
@@ -76,6 +71,50 @@ class AppTheme {
       shape: RoundedRectangleBorder(
         borderRadius: AppBorderRadius.circ20BRG,
       ),
+    ),
+    /////////////////////////////////////////////////////
+    inputDecorationTheme: InputDecorationTheme(
+      errorMaxLines: 1,
+      contentPadding: AppPAdding.vert10hor15,
+      fillColor: lightColorScheme.primary,
+      filled: true,
+      enabledBorder: OutlineInputBorder(
+        borderRadius: AppBorderRadius.circ20BR,
+        borderSide: BorderSide(
+            style: BorderStyle.solid, color: lightColorScheme.outline),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: AppBorderRadius.circ20BR,
+        borderSide: BorderSide(
+            style: BorderStyle.solid, color: lightColorScheme.outline),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: AppBorderRadius.circ20BR,
+        borderSide: BorderSide(
+            style: BorderStyle.solid, color: lightColorScheme.outline),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: AppBorderRadius.circ20BR,
+        borderSide: BorderSide(
+            style: BorderStyle.solid, color: lightColorScheme.outline),
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderRadius: AppBorderRadius.circ20BR,
+        borderSide: BorderSide(
+            style: BorderStyle.solid, color: lightColorScheme.outline),
+      ),
+      border: OutlineInputBorder(
+        borderRadius: AppBorderRadius.circ20BR,
+        borderSide: BorderSide(
+            style: BorderStyle.solid, color: lightColorScheme.outline),
+      ),
+      hintStyle: TextStyle(
+        color: lightColorScheme.onTertiary,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
+      suffixIconColor: lightColorScheme.onTertiary,
+      iconColor: lightColorScheme.onTertiary,
     ),
   );
 }
