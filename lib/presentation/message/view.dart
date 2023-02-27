@@ -2,11 +2,7 @@ import 'package:chat_firebase/app/utils/date.dart';
 import 'package:chat_firebase/presentation/message/components/msg_list_item.dart';
 import 'package:chat_firebase/presentation/message/controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
-import '../../app/config/values/colors.dart';
-import '../../app/utils/widgets/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,15 +12,8 @@ class MessagePage extends GetView<MessageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: transparentAppBar(
-        title: Text(
-          'Messages',
-          style: TextStyle(
-            color: AppColors.primaryBackground,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+      appBar: AppBar(
+        title: const Text('Messages'),
       ),
       body: GetBuilder<MessageController>(
         init: MessageController(),
@@ -39,7 +28,8 @@ class MessagePage extends GetView<MessageController> {
             child: CustomScrollView(
               slivers: [
                 SliverPadding(
-                  padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
+                  padding: EdgeInsets
+                      .zero,
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {

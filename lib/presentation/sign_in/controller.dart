@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:get/get.dart';
-import '../../app/utils/dialogs.dart';
+import '../../app/config/app_config.dart/app_alert_dialogs.dart';
 import '../../domain/repositories/firebase_repo/auth_repo_impl.dart';
 import '../../routes/routes.dart';
 import '../../data/repositories/firebase_repo/auth_repository.dart';

@@ -1,8 +1,10 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controller.dart';
-import '../../app/config/values/values.dart';
+import '../../app/config/app_config.dart/app_assets.dart';
+import '../../app/config/app_config.dart/app_paddings.dart';
+import '../../app/config/app_config.dart/app_strings.dart';
+import '../../app/config/app_config.dart/app_textstyle.dart';
 
 class WelcomePage extends GetView<WelcomeController> {
   const WelcomePage({super.key});
@@ -14,36 +16,27 @@ class WelcomePage extends GetView<WelcomeController> {
       builder: (_) => Scaffold(
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: AppPAdding.horizontal24,
             child: AnimatedOpacity(
               opacity: controller.animation.value,
               duration: const Duration(milliseconds: 1000),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: Get.height * 0.25,
-                  ),
+                  SizedBox(height: Get.height * 0.25),
                   Container(
-                    height: 130.h,
-                    width: 130.w,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/ic_launcher.png',
+                    height: Get.height * 0.18,
+                    width: Get.width * 0.40,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(AppAssets.launchIcon),
                       ),
-                    )),
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.25,
-                  ),
-                  Text(
-                    "ChatBox",
-                    style: TextStyle(
-                      fontSize: 26.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.thirdElementText,
                     ),
+                  ),
+                  SizedBox(height: Get.height * 0.25),
+                  Text(
+                    AppStrings.app_Name,
+                    style: AppTextStyles.onpPrimary26TextStyle,
                   ),
                 ],
               ),

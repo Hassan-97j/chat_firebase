@@ -1,9 +1,13 @@
-import 'package:chat_firebase/app/config/values/values.dart';
-import 'package:chat_firebase/app/utils/widgets/widgets.dart';
-import 'package:chat_firebase/presentation/sign_in/controller.dart';
+import 'controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import '../../app/config/app_config.dart/ap_borders.dart';
+import '../../app/config/app_config.dart/app_assets.dart';
+import '../../app/config/app_config.dart/app_paddings.dart';
+import '../../app/config/app_config.dart/app_strings.dart';
+import '../../app/config/app_config.dart/app_textstyle.dart';
+import '../../app/config/app_config.dart/app_shadows.dart';
 
 class SignInPage extends GetView<SignInController> {
   const SignInPage({super.key});
@@ -14,90 +18,50 @@ class SignInPage extends GetView<SignInController> {
       init: SignInController(),
       builder: (_) => Scaffold(
         body: Center(
-          child: Column(
-            children: [
-              Container(
-                width: 110.w,
-                margin: EdgeInsets.only(top: 84.h),
-                child: Column(
+          child: Padding(
+            padding: AppPAdding.horizontal24,
+            child: Column(
+              children: [
+                Column(
                   children: [
+                    SizedBox(height: Get.height * 0.1),
                     Container(
-                      height: 76.w,
-                      width: 76.w,
-                      margin: EdgeInsets.symmetric(horizontal: 15.w),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            child: Container(
-                              height: 76.w,
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryBackground,
-                                boxShadow: const [Shadows.primaryShadow],
-                                borderRadius: BorderRadius.circular(35),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            child: Image.asset(
-                              'assets/images/ic_launcher.png',
-                              width: 76.w,
-                              height: 76.w,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ],
+                      decoration: BoxDecoration(
+                        borderRadius: AppBorderRadius.circ35BRG,
+                        boxShadow: [Shadows.primaryShadow],
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 15.h, bottom: 15.h),
-                      child: Text(
-                        'Let\'s Chat',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: AppColors.thirdElement,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.sp,
-                          height: 1,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              Container(
-                margin: EdgeInsets.only(bottom: 280.h),
-                width: 295.w,
-                child: Column(
-                  children: [
-                    Text(
-                      'Sign In with social networks',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.primaryText,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16.sp,
+                      width: Get.width * 0.30,
+                      height: Get.height * 0.15,
+                      child: Image.asset(
+                        AppAssets.launchIcon,
+                        fit: BoxFit.contain,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                        top: 30.h,
-                        left: 50.h,
-                        right: 50.h,
-                      ),
-                      child: btnFlatButtonWidget(
-                        onPressed: () async {
-                          await controller.handleSignIn();
-                        },
-                        width: 200.w,
-                        height: 45.w,
-                        title: 'Google Login',
+                      padding: AppPAdding.top12,
+                      child: Text(
+                        AppStrings.letsChat,
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.onSecondary18TextStyle,
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                const Spacer(),
+                Column(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        await controller.handleSignIn();
+                      },
+                      icon: const Icon(FontAwesomeIcons.google),
+                      label: const Text('Google Login'),
+                    ),
+                    SizedBox(height: Get.height * 0.12),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

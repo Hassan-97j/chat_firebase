@@ -67,6 +67,7 @@ class MessageRepoImpl implements MessageRepo {
       print('updateLocationToDB() method in message repo: $e');
       rethrow;
     }
+    
   }
 
   @override

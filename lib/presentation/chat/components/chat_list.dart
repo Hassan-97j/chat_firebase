@@ -1,12 +1,10 @@
-import 'package:chat_firebase/presentation/chat/components/chat_left_items.dart';
+import 'package:chat_firebase/app/config/app_config.dart/app_paddings.dart';
+import 'package:chat_firebase/presentation/chat/components/chat_items.dart';
 import 'package:chat_firebase/routes/routes.dart';
-import 'package:chat_firebase/app/config/values/values.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../controller.dart';
-import 'chat_right_items.dart';
 
 class ChatList extends GetView<ChatController> {
   const ChatList({super.key});
@@ -16,44 +14,66 @@ class ChatList extends GetView<ChatController> {
     return GetBuilder<ChatController>(
       init: ChatController(),
       builder: (_) => Container(
-        padding: EdgeInsets.only(bottom: 50.h),
-        decoration: const BoxDecoration(color: AppColors.chatbg),
+        padding: AppPAdding.bottom50,
+        decoration: BoxDecoration(
+          color: Get.theme.colorScheme.secondary,
+        ),
         child: CustomScrollView(
           reverse: true,
           controller: controller.msgScrollController,
           slivers: [
             SliverPadding(
-              padding: EdgeInsets.symmetric(vertical: 0.w, horizontal: 0.w),
+              padding: EdgeInsets.zero,
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
                     var item = controller.msgContentList[index];
-                    if (controller.userId == item.uid) {
-                      return ChatRightItem(
-                        data: item.content ?? "",
-                        type: item.type ?? "",
-                        ontap: () {
-                          Get.toNamed(
-                            AppRoutes.photoimgview,
-                            arguments: {
-                              "url": item.content ?? '',
+                    return ChatItem(
+                      data: item.content ?? '',
+                      type: item.type ?? '',
+                      mainAxisAlignment: controller.userId == item.uid
+                          ? MainAxisAlignment.end
+                          : MainAxisAlignment.start,
+                      color: controller.userId == item.uid
+                          ? Get.theme.colorScheme.tertiary
+                          : Get.theme.colorScheme.primaryContainer,
+                      ontap: item.type == 'text'
+                          ? null
+                          : () {
+                              Get.toNamed(
+                                AppRoutes.photoimgview,
+                                arguments: {
+                                  "url": item.content ?? '',
+                                },
+                              );
                             },
-                          );
-                        },
-                      );
-                    }
-                    return ChatLeftItem(
-                      data: item.content ?? "",
-                      type: item.type ?? "",
-                      ontap: () {
-                        Get.toNamed(
-                          AppRoutes.photoimgview,
-                          arguments: {
-                            "url": item.content ?? '',
-                          },
-                        );
-                      },
                     );
+                    // if (controller.userId == item.uid) {
+                    //   return ChatRightItem(
+                    //     data: item.content ?? "",
+                    //     type: item.type ?? "",
+                    //     ontap: () {
+                    //       Get.toNamed(
+                    //         AppRoutes.photoimgview,
+                    //         arguments: {
+                    //           "url": item.content ?? '',
+                    //         },
+                    //       );
+                    //     },
+                    //   );
+                    // }
+                    // return ChatLeftItem(
+                    //   data: item.content ?? "",
+                    //   type: item.type ?? "",
+                    //   ontap: () {
+                    //     Get.toNamed(
+                    //       AppRoutes.photoimgview,
+                    //       arguments: {
+                    //         "url": item.content ?? '',
+                    //       },
+                    //     );
+                    //   },
+                    // );
                   },
                   childCount: controller.msgContentList.length,
                 ),

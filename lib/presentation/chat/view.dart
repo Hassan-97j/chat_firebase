@@ -1,8 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chat_firebase/app/config/values/values.dart';
+import 'package:chat_firebase/app/config/app_config.dart/app_paddings.dart';
 import 'package:chat_firebase/presentation/chat/controller.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../app/utils/components/image.dart';
 import 'components/chat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,35 +10,61 @@ class ChatPage extends GetView<ChatController> {
   const ChatPage({super.key});
 
   void showPicker(context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return SafeArea(
-          child: Wrap(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.photo_library),
-                title: const Text('Gallery'),
-                onTap: () async {
-                  await controller.imageFromGallery();
-                  Get.back();
-                  await controller.uploadFile();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.photo_camera),
-                title: const Text('Camera'),
-                onTap: () async {
-                  await controller.imageFromCamera();
-                  Get.back();
-                  controller.uploadFile();
-                },
-              ),
-            ],
-          ),
-        );
-      },
+    Get.bottomSheet(
+      SafeArea(
+        child: Wrap(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: const Text('Gallery'),
+              onTap: () async {
+                await controller.imageFromGallery();
+                Get.back();
+                await controller.uploadFile();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_camera),
+              title: const Text('Camera'),
+              onTap: () async {
+                await controller.imageFromCamera();
+                Get.back();
+                controller.uploadFile();
+              },
+            ),
+          ],
+        ),
+      ),
     );
+    // showModalBottomSheet(
+    //   context: context,
+    //   builder: (BuildContext bc) {
+    //     return SafeArea(
+    //       child: Wrap(
+    //         children: [
+    //           ListTile(
+    //             leading: const Icon(Icons.photo_library),
+    //             title: const Text('Gallery'),
+    //             onTap: () async {
+    //               await controller.imageFromGallery();
+    //               Get.back();
+    //               await controller.uploadFile();
+    //             },
+    //           ),
+    //           ListTile(
+    //             leading: const Icon(Icons.photo_camera),
+    //             title: const Text('Camera'),
+    //             onTap: () async {
+    //               await controller.imageFromCamera();
+    //               Get.back();
+    //               controller.uploadFile();
+    //             },
+    //           ),
+    //         ],
+    //       ),
+    //     );
+    //   },
+    // );
   }
 
   @override
@@ -52,61 +77,35 @@ class ChatPage extends GetView<ChatController> {
         init: ChatController(),
         builder: (_) => Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
             flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color.fromARGB(255, 176, 106, 231),
-                    Color.fromARGB(255, 166, 112, 231),
-                    Color.fromARGB(255, 131, 123, 231),
-                    Color.fromARGB(255, 104, 132, 231),
-                  ],
-                  transform: GradientRotation(90),
-                ),
+              decoration: BoxDecoration(
+                color: Get.theme.colorScheme.surface,
               ),
             ),
             title: Container(
-              padding: EdgeInsets.only(top: 0.w, bottom: 0.w, right: 0.w),
+              padding: EdgeInsets.zero,
               child: Row(children: [
                 Container(
-                  padding: EdgeInsets.only(top: 0.w, bottom: 0.w, right: 0.w),
+                  padding: EdgeInsets.zero,
                   child: InkWell(
                     onTap: () {},
-                    child: SizedBox(
-                      width: 44.w,
-                      height: 44.w,
-                      child: CachedNetworkImage(
-                        imageUrl: controller.toAvatar,
-                        imageBuilder: (context, imageProvider) => Container(
-                          margin: null,
-                          height: 44.w,
-                          width: 44.w,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => const Image(
-                          image: AssetImage('assets/images/ic_launcher.png'),
-                        ),
+                    child: CircleAvatar(
+                      radius: 28,
+                      child: MyNetworkImage(
+                        imgUrl: controller.toAvatar,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 15.w),
+                const SizedBox(width: 15),
                 Container(
-                  width: 180.w,
-                  padding: EdgeInsets.only(top: 0.w, bottom: 0.w, right: 0.w),
+                  width: 180,
+                  padding: EdgeInsets.zero,
                   child: Row(
                     children: [
                       SizedBox(
-                        width: 180.w,
-                        height: 44.w,
+                        width: 180,
+                        height: 44,
                         child: GestureDetector(
                           onTap: () {},
                           child: Column(
@@ -118,9 +117,9 @@ class ChatPage extends GetView<ChatController> {
                                 overflow: TextOverflow.clip,
                                 maxLines: 1,
                                 style: TextStyle(
-                                  color: AppColors.primaryBackground,
+                                  color: Get.theme.colorScheme.onSurface,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16.sp,
+                                  fontSize: 16,
                                 ),
                               ),
                               Text(
@@ -128,9 +127,9 @@ class ChatPage extends GetView<ChatController> {
                                 overflow: TextOverflow.clip,
                                 maxLines: 1,
                                 style: TextStyle(
-                                  color: AppColors.primaryBackground,
+                                  color: Get.theme.colorScheme.onSurface,
                                   fontWeight: FontWeight.normal,
-                                  fontSize: 14.sp,
+                                  fontSize: 14,
                                 ),
                               ),
                             ],
@@ -150,21 +149,21 @@ class ChatPage extends GetView<ChatController> {
                 children: [
                   const ChatList(),
                   Positioned(
-                    bottom: 0.h,
-                    height: 50.h,
+                    bottom: 0,
+                    height: 50,
                     child: Container(
-                      width: 360.h,
-                      height: 50.h,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primaryBackground,
+                      width: 360,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Get.theme.colorScheme.primary,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            padding: EdgeInsets.only(left: 10.w, bottom: 5.w),
-                            width: 217.w,
-                            height: 50.h,
+                            padding: AppPAdding.left10bottom5,
+                            width: 217,
+                            height: 50,
                             child: TextField(
                               keyboardType: TextInputType.multiline,
                               maxLines: 3,
@@ -177,25 +176,26 @@ class ChatPage extends GetView<ChatController> {
                             ),
                           ),
                           Container(
-                            height: 30.h,
-                            width: 30.w,
-                            margin: EdgeInsets.only(left: 5.w),
+                            height: 30,
+                            width: 30,
+                            margin: AppPAdding.left5,
                             child: GestureDetector(
                               onTap: () {
                                 showPicker(context);
                               },
                               child: Icon(
                                 Icons.photo_outlined,
-                                size: 35.w,
-                                color: Colors.blue,
+                                size: 35,
+                                color: Get.theme.colorScheme.surface,
                               ),
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(
-                                left: 10.w, top: 5.h, bottom: 5.h),
-                            width: 65.w,
-                            height: 35.h,
+                            margin: AppPAdding.left10TB5,
+                            // EdgeInsets.only(
+                            //     left: 10.w, top: 5.h, bottom: 5.h),
+                            width: 65,
+                            height: 35,
                             child: ElevatedButton(
                               onPressed: () async {
                                 await controller.sendMessage();

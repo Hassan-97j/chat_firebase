@@ -1,8 +1,9 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:chat_firebase/app/config/app_config.dart/app_paddings.dart';
+import 'package:chat_firebase/app/config/app_config.dart/app_textstyle.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../app/config/values/values.dart';
+import 'package:get/get.dart';
 
 class MeItem extends StatelessWidget {
   MeItem({
@@ -18,53 +19,35 @@ class MeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 1.w),
-      padding: EdgeInsets.only(top: 0.w, left: 15.w, right: 15.w),
-      height: 56.w,
-      decoration: const BoxDecoration(
-        color: AppColors.primaryBackground,
+      margin: AppPAdding.bottom12,
+      padding: AppPAdding.horizontal15,
+      height: 60,
+      decoration: BoxDecoration(
+        color: Get.theme.colorScheme.tertiary,
       ),
       child: InkWell(
-        onTap: ontap, 
+        onTap: ontap,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 56.w,
-                  child: Image(
-                    image: AssetImage(assetName),
-                    height: 40.w,
-                    width: 40.w,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                    left: 20.w,
-                  ),
-                  height: 56.w,
-                  child: Text(
-                    name,
-                    style: TextStyle(
-                      color: AppColors.thirdElement,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15.sp,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              alignment: Alignment.center,
+            SizedBox(
+              height: 56,
               child: Image(
-                image: const AssetImage('assets/icons/ang.png'),
-                height: 15.w,
-                width: 15.w,
+                image: AssetImage(assetName),
+                height: 40,
+                width: 40,
               ),
             ),
+            const SizedBox(width: 20),
+            Text(
+              name,
+              style: AppTextStyles.surface16TextStyle,
+            ),
+            const Spacer(),
+            Icon(
+              Icons.chevron_right,
+              color: Get.theme.colorScheme.onTertiary,
+              size: 29,
+            )
           ],
         ),
       ),

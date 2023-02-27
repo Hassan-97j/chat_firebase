@@ -1,8 +1,9 @@
-import 'package:chat_firebase/app/utils/dialogs.dart';
+
 import 'package:chat_firebase/domain/interface/user_model.dart';
 import 'package:chat_firebase/domain/repositories/firebase_repo/contacts_repo_impl.dart';
 import 'package:get/get.dart';
 
+import '../../app/config/app_config.dart/app_alert_dialogs.dart';
 import '../../data/repositories/firebase_repo/contacts_repository.dart';
 
 class ContactsController extends GetxController {
@@ -68,8 +69,8 @@ class ContactsController extends GetxController {
     var data = await contactRepo.loadAllContacts();
     for (var doc in data.docs) {
       contactList.assign(doc.data());
-      update();
     }
     isLoading = false;
+    update();
   }
 }

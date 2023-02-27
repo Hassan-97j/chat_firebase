@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../config/values/storage.dart';
+import '../../config/app_config.dart/app_strings.dart';
 import '../storage_service.dart';
 
 class ConfigStore extends GetxController {
@@ -17,16 +17,18 @@ class ConfigStore extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    isFirstOpen = StorageService.to.getBool(STORAGE_DEVICE_FIRST_OPEN_KEY);
+    isFirstOpen =
+        StorageService.to.getBool(StorageStrings.store_DeviceFirstOpenKey);
   }
 
-
   Future<bool> saveAlreadyOpen() {
-    return StorageService.to.setBool(STORAGE_DEVICE_FIRST_OPEN_KEY, true);
+    return StorageService.to
+        .setBool(StorageStrings.store_DeviceFirstOpenKey, true);
   }
 
   void onInitLocale() {
-    var langCode = StorageService.to.getString(STORAGE_LANGUAGE_CODE);
+    var langCode =
+        StorageService.to.getString(StorageStrings.store_LanguageCode);
     if (langCode.isEmpty) return;
     var index = languages.indexWhere((element) {
       return element.languageCode == langCode;
@@ -38,6 +40,7 @@ class ConfigStore extends GetxController {
   void onLocaleUpdate(Locale value) {
     locale = value;
     Get.updateLocale(value);
-    StorageService.to.setString(STORAGE_LANGUAGE_CODE, value.languageCode);
+    StorageService.to
+        .setString(StorageStrings.store_LanguageCode, value.languageCode);
   }
 }

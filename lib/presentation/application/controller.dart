@@ -1,4 +1,4 @@
-import 'package:chat_firebase/app/utils/widgets/bottom_nav_bar/nav_bar_data.dart';
+import 'package:chat_firebase/app/utils/components/bottom_nav_bar/nav_bar_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

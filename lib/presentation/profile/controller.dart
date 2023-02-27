@@ -1,4 +1,4 @@
-import 'package:chat_firebase/app/utils/dialogs.dart';
+import '../../app/config/app_config.dart/app_alert_dialogs.dart';
 import 'package:get/get.dart';
 import '../../data/repositories/firebase_repo/auth_repository.dart';
 import '../../data/repositories/firebase_repo/profile_repository.dart';

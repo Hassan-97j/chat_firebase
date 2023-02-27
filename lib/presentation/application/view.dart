@@ -1,4 +1,4 @@
-import 'package:chat_firebase/app/utils/widgets/bottom_nav_bar/nav_bar_widget.dart';
+import 'package:chat_firebase/app/utils/components/bottom_nav_bar/nav_bar_widget.dart';
 import 'package:chat_firebase/presentation/application/controller.dart';
 
 import '../contacts/view.dart';

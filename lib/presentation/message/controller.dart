@@ -1,5 +1,5 @@
 import 'package:chat_firebase/app/services/service_handler/user.dart';
-import 'package:chat_firebase/app/utils/dialogs.dart';
+import '../../app/config/app_config.dart/app_alert_dialogs.dart';
 import 'package:chat_firebase/data/repositories/firebase_repo/message_repo.dart';
 import 'package:chat_firebase/data/repositories/http_repo/maps_repo.dart';
 import 'package:chat_firebase/data/repositories/location_repo.dart';
@@ -75,6 +75,7 @@ class MessageController extends GetxController {
       // print('location ka response ye hai bhai dekh le ghalt hai bad request theek kr lena $response');
       if (response != null) {
         await messageRepo.updateLocationToDB(response);
+        update();
       }
     } catch (e) {
       // ignore: avoid_print

@@ -1,9 +1,6 @@
+import 'package:chat_firebase/app/config/app_config.dart/app_textstyle.dart';
 import 'package:chat_firebase/presentation/profile/components/me_item.dart';
 import 'package:chat_firebase/presentation/profile/controller.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../app/config/values/colors.dart';
-import '../../app/utils/widgets/app.dart';
 import 'components/head_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,26 +11,23 @@ class ProfilePage extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: transparentAppBar(
-        title: Text(
-          'Profile',
-          style: TextStyle(
-            color: AppColors.primaryBackground,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+      appBar: AppBar(
+        title: const Text('Profile'),
       ),
       body: GetBuilder<ProfileController>(
         init: ProfileController(),
         builder: (_) => !controller.isLoading
             ? controller.meListItem.isEmpty
-                ? const Center(child: Text('No Data'))
+                ? Center(
+                    child: Text(
+                      'No Data',
+                      style: AppTextStyles.onpPrimary26TextStyle,
+                    ),
+                  )
                 : CustomScrollView(
                     slivers: [
                       SliverPadding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 0.w, horizontal: 0.w),
+                        padding: EdgeInsets.zero,
                         sliver: SliverToBoxAdapter(
                           child: controller.headerDetails == null
                               ? Container()
@@ -47,8 +41,7 @@ class ProfilePage extends GetView<ProfileController> {
                         ),
                       ),
                       SliverPadding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 0.w, horizontal: 0.w),
+                        padding: EdgeInsets.zero,
                         sliver: SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (context, index) {
@@ -69,7 +62,10 @@ class ProfilePage extends GetView<ProfileController> {
                       ),
                     ],
                   )
-            : const Center(child: CircularProgressIndicator()),
+            : Center(
+                child: CircularProgressIndicator(
+                color: Get.theme.colorScheme.surface,
+              )),
       ),
     );
   }

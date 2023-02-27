@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable
+import 'package:chat_firebase/app/config/app_config.dart/app_paddings.dart';
+import 'package:chat_firebase/app/config/app_config.dart/app_textstyle.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../app/config/values/values.dart';
-import '../../../app/utils/widgets/widgets.dart';
+import 'package:get/get.dart';
+
+import '../../../app/utils/components/image.dart';
 
 
 class HeadItem extends StatelessWidget {
@@ -20,81 +22,43 @@ class HeadItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          EdgeInsets.only(top: 30.w, left: 15.w, right: 15.w, bottom: 15.w),
-      margin: EdgeInsets.only(bottom: 30.w),
+      padding: AppPAdding.top30LRB15,
+      margin: AppPAdding.bottom30,
       decoration: BoxDecoration(
-        color: AppColors.primaryBackground,
-        borderRadius: BorderRadius.circular(0),
-        boxShadow: const [
+        color: Get.theme.colorScheme.secondary,
+        boxShadow: [
           BoxShadow(
-            color: AppColors.tabCellSeparator,
-            offset: Offset(0.0, 5.0),
+            color: Get.theme.colorScheme.outline,
+            offset: const Offset(0.0, 5.0),
             blurRadius: 15.0,
             spreadRadius: 1.0,
           ),
         ],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Row(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+          CircleAvatar(
+            radius: 28,
+            child: MyNetworkImage(
+              imgUrl: url,
+            ),
+          ),
+          const SizedBox(width: 20),
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () {},
-                child: SizedBox(
-                  height: 54.w,
-                  width: 54.w,
-                  child: netImageCached(
-                    url,
-                    width: 54.w,
-                    height: 54.w,
-                  ),
-                ),
+              Text(
+                name,
+                overflow: TextOverflow.clip,
+                style: AppTextStyles.surface16TextStyle,
               ),
-              SizedBox(
-                width: 250.w,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(
-                          top: 5.w, left: 15.w, right: 0.w, bottom: 0.w),
-                      alignment: Alignment.centerLeft,
-                      width: 190.w,
-                      height: 54.w,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            name,
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.thirdElement,
-                            ),
-                          ),
-                          Text(
-                            id,
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.normal,
-                              color: AppColors.thirdElementText,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              Text(
+                id,
+                overflow: TextOverflow.clip,
+                style: AppTextStyles.onTertiary14TextStyle,
               ),
             ],
-          ),
+          )
         ],
       ),
     );

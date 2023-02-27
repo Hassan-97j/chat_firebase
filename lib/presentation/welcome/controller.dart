@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../routes/routes.dart';
@@ -46,7 +45,7 @@ class WelcomeController extends GetxController
   waitAndNavigate() {
     Timer.run(() {
       Future.delayed(
-        const Duration(seconds: 2),
+        const Duration(seconds: 3),
         () {
           if (UserStore.to.isLogin == true) {
             Get.offAndToNamed(AppRoutes.application);
