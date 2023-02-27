@@ -1,5 +1,5 @@
-import 'package:chat_firebase/app/utils/components/bottom_nav_bar/nav_bar_widget.dart';
-import 'package:chat_firebase/presentation/application/controller.dart';
+import '../../app/utils/components/bottom_nav_bar/nav_bar_widget.dart';
+import 'controller.dart';
 
 import '../contacts/view.dart';
 import '../message/view.dart';

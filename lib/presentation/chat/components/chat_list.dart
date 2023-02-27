@@ -48,32 +48,6 @@ class ChatList extends GetView<ChatController> {
                               );
                             },
                     );
-                    // if (controller.userId == item.uid) {
-                    //   return ChatRightItem(
-                    //     data: item.content ?? "",
-                    //     type: item.type ?? "",
-                    //     ontap: () {
-                    //       Get.toNamed(
-                    //         AppRoutes.photoimgview,
-                    //         arguments: {
-                    //           "url": item.content ?? '',
-                    //         },
-                    //       );
-                    //     },
-                    //   );
-                    // }
-                    // return ChatLeftItem(
-                    //   data: item.content ?? "",
-                    //   type: item.type ?? "",
-                    //   ontap: () {
-                    //     Get.toNamed(
-                    //       AppRoutes.photoimgview,
-                    //       arguments: {
-                    //         "url": item.content ?? '',
-                    //       },
-                    //     );
-                    //   },
-                    // );
                   },
                   childCount: controller.msgContentList.length,
                 ),

@@ -6,7 +6,6 @@ class Dialogs {
     Get.snackbar(
       title,
       msg,
-      backgroundColor: Colors.blue.withOpacity(.8),
     );
   }
 
