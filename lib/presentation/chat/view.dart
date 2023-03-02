@@ -160,6 +160,11 @@ class ChatPage extends GetView<ChatController> {
                       child: ElevatedButton(
                           onPressed: () async {
                             await controller.sendMessage();
+                            await controller.sendPushNotification(
+                              controller.toToken,
+                              controller.textController.text.trim(),
+                              controller.toAvatar,
+                            );
                           },
                           child: const FittedBox(
                             fit: BoxFit.contain,
@@ -171,68 +176,6 @@ class ChatPage extends GetView<ChatController> {
               ),
             ],
           ),
-          // SafeArea(
-          //   child: ConstrainedBox(
-          //     constraints: const BoxConstraints.expand(),
-          //     child: Stack(
-          //       children: [
-          //        // const ChatList(),
-          //         // Positioned(
-          //         //   bottom: 0,
-          //         //   height: Get.height * 0.07,
-          //         //   child: Container(
-          //         //     margin: AppPAdding.horizontal15,
-          //         //     width: double.maxFinite,
-          //         //     height: 56,
-          //         //     decoration: BoxDecoration(
-          //         //       color: Get.theme.colorScheme.tertiary,
-          //         //     ),
-          //         //     child: Column(
-          //         //       children: [
-          //         //         Row(
-          //         //           children: [
-          //         //             SizedBox(
-          //         //               width: Get.width * 0.70,
-          //         //               height: 50,
-          //         //               child: TextField(
-          //         //                 keyboardType: TextInputType.multiline,
-          //         //                 maxLines: 3,
-          //         //                 controller: controller.textController,
-          //         //                 autofocus: false,
-          //         //                 focusNode: controller.contentNode,
-          //         //                 decoration: const InputDecoration(
-          //         //                   hintText: "SendMessage",
-          //         //                 ),
-          //         //               ),
-          //         //             ),
-          //         //             IconButton(
-          //         //               onPressed: () {
-          //         //                 showPicker(context);
-          //         //               },
-          //         //               icon: Icon(
-          //         //                 Icons.photo_outlined,
-          //         //                 size: 35,
-          //         //                 color: Get.theme.colorScheme.surface,
-          //         //               ),
-          //         //             ),
-          //         //             ElevatedButton(
-          //         //                 onPressed: () async {
-          //         //                   await controller.sendMessage();
-          //         //                 },
-          //         //                 child: const FittedBox(
-          //         //                   fit: BoxFit.contain,
-          //         //                   child: Text('Send'),
-          //         //                 ))
-          //         //           ],
-          //         //         ),
-          //         //       ],
-          //         //     ),
-          //         //   ),
-          //         // ),
-          //       ],
-          //     ),
-          //   ),
-          //  ),
         ),
       ),
     );

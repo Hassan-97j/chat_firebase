@@ -24,7 +24,7 @@ class GoogleMapAPI extends APIRequestRepresentable {
   }
 
   @override
-  String get endpoint => APIEndpoint.myurl;
+  String get endpoint => GoogleMApsAPIEndpoint.mapsURl;
 
   @override
   Map<String, String> get headers => {};
@@ -37,7 +37,7 @@ class GoogleMapAPI extends APIRequestRepresentable {
   @override
   Map<String, dynamic> get urlParams => {
         "address": address,
-        "key": APIEndpoint.key,
+        "key": GoogleMApsAPIEndpoint.mapsKey,
       };
 
   Future request() {
@@ -49,6 +49,7 @@ class GoogleMapAPI extends APIRequestRepresentable {
 
   @override
   String get path {
-    return APIEndpoint.middleWare + APIEndpoint.geocodeUrl;
+    return GoogleMApsAPIEndpoint.mapsMiddleWare +
+        GoogleMApsAPIEndpoint.geocodeUrl;
   }
 }

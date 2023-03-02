@@ -13,16 +13,21 @@ import '../../app/utils/randomstring.dart';
 import 'package:get/get.dart';
 
 import '../../data/repositories/firebase_repo/chat_repository.dart';
+import '../../data/repositories/notification_repo.dart';
+import '../../domain/repositories/notification_repo_impl.dart';
 
 class ChatController extends GetxController {
   final ChatRepository chatRepository = ChatrepositoryImpl();
   final ImagePickerRepo imagePickerRepo = ImagePickerRepoImpl();
   final StorageRepo storageRepo = StorageRepoImpl();
+  NotificationRepo notificationRepo = NotificationRepoImpl();
+  //final  fcmapi =
   var msgContentList = <MsgcontentModel>[];
   var toId = "";
   var toName = "";
   var toAvatar = "";
   var toLocation = "unknown";
+  var toToken = '';
   // ignore: prefer_typing_uninitialized_variables
   var docId;
   final textController = TextEditingController();
@@ -138,12 +143,27 @@ class ChatController extends GetxController {
   void onReady() {
     super.onReady();
     orderMessagesByLAstAdd();
-
     getLocation();
+    getFCMToken();
   }
 
   getLocation() async {
-    await chatRepository.getLocationFromDB(toId, toLocation);
+    var loc = await chatRepository.getLocationFromDB(
+      toId,
+    );
+    if (loc != '') {
+      toLocation = loc!;
+      update();
+    }
+    update();
+  }
+
+  getFCMToken() async {
+    var tok = await chatRepository.getFCMTokenFromDB(toId);
+    if (tok != '') {
+      toToken = tok!;
+      update();
+    }
     update();
   }
 
@@ -168,6 +188,10 @@ class ChatController extends GetxController {
       // ignore: avoid_print
     }, onError: (error) => print('Listen Failed: $error'));
     update();
+  }
+
+  sendPushNotification(String fcmToken, String body, String title) async {
+    await notificationRepo.sendPushNotification(fcmToken, body, title);
   }
 
   @override

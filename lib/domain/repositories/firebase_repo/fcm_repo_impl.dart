@@ -5,8 +5,8 @@ import '../../../app/services/service_handler/user.dart';
 import '../../../data/repositories/firebase_repo/fcm_repo.dart';
 
 class FCMRepoImpl implements FCMRepo {
-  // final token = UserStore.to.token;
-  // final db = FirebaseFirestore.instance;
+  @override
+  FirebaseMessaging? get messaging => FirebaseMessaging.instance;
   @override
   get db => FirebaseFirestore.instance;
 
@@ -16,7 +16,7 @@ class FCMRepoImpl implements FCMRepo {
   @override
   Future<String?> getFCMToken() async {
     try {
-      final fcmToken = FirebaseMessaging.instance.getToken();
+      final fcmToken = messaging!.getToken();
       // ignore: unnecessary_null_comparison
       return fcmToken;
     } catch (e) {

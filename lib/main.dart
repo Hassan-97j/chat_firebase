@@ -3,9 +3,9 @@ import 'package:chat_firebase/routes/routes.dart';
 
 import 'package:chat_firebase/app/services/service_handler/config.dart';
 import 'package:chat_firebase/app/services/service_handler/user.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-//import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'app/themes/app_theme.dart';
 import 'firebase_options.dart';
@@ -19,6 +19,8 @@ void main() async {
     name: "firebase-chat",
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseMessaging.instance.getInitialMessage();
+  FirebaseMessaging.onBackgroundMessage(fireBaseMessagingBackGroundHAandler);
   runApp(const MyApp());
 }
 
@@ -26,18 +28,18 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return 
-    // ScreenUtilInit(
-    //   builder: (context, child) {
-    //     return 
-        GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'ChatBox',
-          theme: AppTheme.light,
-          initialRoute: AppRoutes.initial,
-          getPages: AppPages.routes,
-        );
-    //   },
-    // );
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'ChatBox',
+      theme: AppTheme.light,
+      initialRoute: AppRoutes.initial,
+      getPages: AppPages.routes,
+    );
   }
+}
+
+Future<void> fireBaseMessagingBackGroundHAandler(
+    RemoteMessage myMessage) async {
+  // ignore: avoid_print
+  print('handle the back ground message ${myMessage.messageId}');
 }

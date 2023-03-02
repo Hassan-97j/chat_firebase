@@ -53,10 +53,7 @@ class ChatrepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future<void> getLocationFromDB(
-    String id,
-    String tolacation,
-  ) async {
+  Future<String?> getLocationFromDB(String id) async {
     try {
       var userLocation = await db
           .collection("users")
@@ -70,12 +67,14 @@ class ChatrepositoryImpl implements ChatRepository {
           .get();
       var location = userLocation.docs.first.data().location;
       if (location != '') {
-        tolacation = location ?? "Unknown";
+        return location;
       }
     } catch (e) {
       // ignore: avoid_print
       print('error: $e');
+      rethrow;
     }
+    return null;
   }
 
   @override
@@ -98,5 +97,30 @@ class ChatrepositoryImpl implements ChatRepository {
       print('error with orderMsgByLastTime() method: $e');
       rethrow;
     }
+  }
+
+  @override
+  Future<String?> getFCMTokenFromDB(String id) async {
+    try {
+      var userFCMToken = await db
+          .collection("users")
+          .where("id", isEqualTo: id)
+          .withConverter(
+            fromFirestore: UserDataModel.fromFirestore,
+            toFirestore: (UserDataModel userData, options) {
+              return userData.toFirestore();
+            },
+          )
+          .get();
+      var token = userFCMToken.docs.first.data().fcmtoken;
+      if (token != '') {
+        return token;
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print('error: $e');
+      rethrow;
+    }
+    return null;
   }
 }

@@ -14,6 +14,7 @@ abstract class ChatRepository {
   Future<DocumentReference<MsgcontentModel>> addMessage(
       String sendContent, String type, var getDocID);
   Future<void> updateMessage(String lastMsg, var getDocID);
-  Future<void> getLocationFromDB(String id, String tolacation);
+  Future<String?> getLocationFromDB(String id);
+  Future<String?> getFCMTokenFromDB(String id);
   Query<MsgcontentModel> orderMsgByLastTime(var getDocID);
 }

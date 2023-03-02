@@ -1,4 +1,6 @@
 import 'package:chat_firebase/app/services/service_handler/user.dart';
+import 'package:chat_firebase/data/repositories/notification_repo.dart';
+import 'package:chat_firebase/domain/repositories/notification_repo_impl.dart';
 import '../../app/config/app_config.dart/app_alert_dialogs.dart';
 import 'package:chat_firebase/data/repositories/firebase_repo/message_repo.dart';
 import 'package:chat_firebase/data/repositories/http_repo/maps_repo.dart';
@@ -18,6 +20,7 @@ class MessageController extends GetxController {
   FCMRepo fcmRepo = FCMRepoImpl();
   MapsRepo mapsRepo = MapsRepoImpl();
   LocationRepo locationRepo = LocationRepoImpl();
+  NotificationRepo notificationRepo = NotificationRepoImpl();
   var msgList = <QueryDocumentSnapshot<MsgModel>>[];
   final token = UserStore.to.token;
   final RefreshController refreshController =
@@ -28,6 +31,8 @@ class MessageController extends GetxController {
     super.onReady();
     getUserLocation();
     getFCMToken();
+    requestPermission();
+    initInffo();
   }
 
   void onRefresh() {
@@ -72,7 +77,6 @@ class MessageController extends GetxController {
     try {
       String address = await locationRepo.getLocationAddress();
       var response = await mapsRepo.getLocation(address);
-      // print('location ka response ye hai bhai dekh le ghalt hai bad request theek kr lena $response');
       update();
       if (response != null) {
         await messageRepo.updateLocationToDB(response);
@@ -92,5 +96,14 @@ class MessageController extends GetxController {
     }
 
     update();
+  }
+
+  requestPermission() {
+    notificationRepo.requestPemission();
+    update();
+  }
+
+  initInffo() async {
+    notificationRepo.initInfo();
   }
 }
